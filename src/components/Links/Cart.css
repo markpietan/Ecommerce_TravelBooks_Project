@@ -1,0 +1,11 @@
+.cartPage {
+  margin: 5px;
+  padding: 10px;
+}
+
+.actualCart {
+  margin: 10%;
+  padding: 10%;
+  background-color: rgb(150, 204, 96);
+  border-radius: 10px;
+}
