@@ -4,6 +4,16 @@ const {
   // other db methods
 } = require("./index");
 
+const {
+  registerUser,
+  logInUser,
+  getUserById,
+  getUserCart,
+  getUserOrders,
+
+  // other db methods
+} = require("./users");
+
 async function buildTables() {
   try {
     await client.connect();
@@ -79,6 +89,22 @@ async function buildTables() {
 
 async function populateInitialData() {
   try {
+    const email = "jajajajajaja3";
+    const password = "hdhdhdhdd12";
+    const response = await registerUser({
+      email,
+      password,
+    });
+    if (response.length > 0) {
+      console.log("User Created");
+      const userRows = await logInUser({ email, password });
+      console.log(userRows);
+      const userRows2 = await getUserById({ id: 505 });
+      console.log("User with id 505: " + userRows2);
+    } else {
+      console.log("Email is already in use");
+    }
+    const response = await getUserOrders({ id: 182 });
     // create useful starting data
   } catch (error) {
     throw error;
