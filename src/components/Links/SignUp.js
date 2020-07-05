@@ -22,7 +22,7 @@ function SignUp() {
         <div className="signUpButton">
           <Button variant="contained">Sign Up</Button>
         </div>
-        <div className="Sign UpWithGoogle">
+        <div className="googleSignUp">
           <Button variant="contained">Sign Up With Google</Button>
         </div>
       </div>

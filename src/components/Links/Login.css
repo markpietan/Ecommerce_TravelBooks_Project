@@ -1,34 +1,26 @@
-.loginPage {
-  margin: 5px;
-  padding: 10px;
-}
-
 .loginSection {
-  margin: 10%;
-  padding: 10%;
-  background-color: rgb(141, 182, 216);
-  border-radius: 10px;
-}
-
-.emailText,
-.passwordText {
-  padding-bottom: 10px;
-}
-
-.emailInput {
-  margin-bottom: 10px;
+  margin: 10px;
   padding: 10px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px black;
+  background-color: rgb(11, 141, 216);
+}
+
+.emailInput,
+.passwordInput {
+  padding: 8px;
   border-radius: 10px;
   font-size: 20px;
 }
 
 .passwordInput {
-  margin-bottom: 20px;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 20px;
+  margin-bottom: 25px;
 }
 
 .loginButton {
+  margin-bottom: 25px;
+}
+
+.loginWithGoogle {
   margin-bottom: 25px;
 }
