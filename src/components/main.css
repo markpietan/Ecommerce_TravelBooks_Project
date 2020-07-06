@@ -1,11 +1,4 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .App {
-  text-align: center;
   font-family: Roboto;
 }
 
@@ -13,7 +6,9 @@ nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin: 5px;
+  border-radius: 10px;
   min-height: 10vh;
-  background-color: burlywood;
+  background-color: rgb(11, 141, 216);
   list-style: none;
 }

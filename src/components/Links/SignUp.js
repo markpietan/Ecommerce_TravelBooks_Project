@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 function SignUp() {
   return (
     <div className="signUpPage">
-      <h1>Sign Up Page</h1>
+      <h1 className="signUpTitle">Sign Up Page</h1>
       <div className="signUpSection">
         <h2 className="emailText">Email:</h2>
         <input
@@ -17,6 +17,12 @@ function SignUp() {
         <input
           type="text"
           placeholder="Enter Password..."
+          className="passwordInput"
+        ></input>
+        <h2 className="passwordText">Confirm Password:</h2>
+        <input
+          type="text"
+          placeholder="Confirm Password..."
           className="passwordInput"
         ></input>
         <div className="signUpButton">

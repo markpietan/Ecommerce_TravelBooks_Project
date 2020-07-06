@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 function Login() {
   return (
     <div className="loginPage">
-      <h1>Login Page</h1>
+      <h1 className="loginTitle">Login Page</h1>
       <div className="loginSection">
         <h2 className="emailText">Email:</h2>
         <input
@@ -13,7 +13,7 @@ function Login() {
           placeholder="Enter email..."
           className="emailInput"
         ></input>
-        <h2 className="emailText">Password:</h2>
+        <h2 className="passwordText">Password:</h2>
         <input
           type="text"
           placeholder="Enter Password..."

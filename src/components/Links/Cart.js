@@ -8,7 +8,7 @@ function Cart() {
       <h1 className="cartTitle">Cart Page</h1>
       <div className="actualCart">
         <h3 className="thisIsCart">This is your cart:</h3>
-        <h3 className="emtpyCart">
+        <h3 className="emptyCart">
           Your cart is emtpy (only display if cart is emtpy)
         </h3>
         <h3 className="total">Total: (display total here)</h3>
