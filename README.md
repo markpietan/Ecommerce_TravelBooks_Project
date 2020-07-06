@@ -101,3 +101,12 @@ heroku run npm run db:build
 Which will run `npm run db:build` on the heroku server.
 
 Once that command runs, you can type `heroku open` to get a browser to open up locally with your full-stack application running remotely.
+
+
+How to run psql files:
+psql -d ecommerce_site -f userorders.sql
+-d specifies your database
+-f specifies the file that you want to use
+Dont forget to navigate to the data folder
+*the amount column in the orders table doesnt add up to the amount of products in the order because the final amount is a random generated number b/w 1 - 500...
+*because userorders is generated randomly, it is possible that 2 users can be linked to one order...
