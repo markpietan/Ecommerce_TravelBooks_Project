@@ -68,6 +68,23 @@ async function getUserCart({ id }) {
   }
 }
 
+
+async function getUserByEmail({ email }) {
+  try {
+    const response = await client.query(
+      `
+               SELECT * FROM users
+               WHERE email = $1
+                `,
+      [email]
+    );
+    console.log(response.rows);
+    return response.rows;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getUserOrders({ id }) {
   try {
     const response = await client.query(
@@ -94,4 +111,5 @@ module.exports = {
   getUserById,
   getUserCart,
   getUserOrders,
+  getUserByEmail
 };
