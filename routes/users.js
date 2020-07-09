@@ -3,13 +3,14 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { JWT_SECRET } = process.env;
 const bcrypt = require("bcrypt");
+const {requireUser} = require("./../src/api/utils")
 const {
   registerUser,
   logInUser,
   getUserById,
   getUserCart,
   getUserOrders,
-  getUserByEmail
+  getUserByEmail,
 } = require("./../db/users");
 
 usersRouter.post("/register", (req, res, next) => {
@@ -100,5 +101,10 @@ usersRouter.post("/login", async (req, res, next) => {
     throw error;
   }
 });
+//should orders have its own route file?
+usersRouter.get("/orders", requireUser, async function(req, res, next){
+console.log("Hello")
+
+})
 
 module.exports = usersRouter;
