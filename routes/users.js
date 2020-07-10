@@ -1,72 +1,110 @@
-const express = require("express");
-const usersRouter = express.Router();
+const usersRouter = require("express").Router();
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const { JWT_SECRET } = process.env;
+const bcrypt = require("bcrypt");
+const {requireUser} = require("./../src/api/utils")
+const {
+  registerUser,
+  logInUser,
+  getUserById,
+  getUserCart,
+  getUserOrders,
+  getUserByEmail,
+} = require("./../db/users");
 
-usersRouter.get("/", async (req, res) => {
-  //   const users = await getAllUsers();
-  //   res.send({
-  //     users,
-  //   });
-  console.log("Anything");
-});
-
-usersRouter.post("/register", async (req, res, next) => {
-  const { username, password } = req.body;
-  try {
-    const _user = await getUserByUsername(username);
-    if (_user) {
-      next({
-        name: "UserExistsError",
-        message: "A user by that username already exists",
+usersRouter.post("/register", (req, res, next) => {
+  const { email, password } = req.body;
+  const SALT_COUNT = 10;
+  if (password.length < 8) {
+    res.send({ message: "password must be 8 characters" });
+  }
+  bcrypt.hash(password, SALT_COUNT, async function (err, hashedPassword) {
+    console.log(hashedPassword);
+    try {
+      let rows = await registerUser({
+        email,
+        password: hashedPassword,
       });
-    }
-    const user = await createUser({
-      username,
-      password,
-    });
-    const token = jwt.sign(
-      {
-        id: user.id,
-        username,
-      },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1w",
+      if (rows.length === 0) {
+        res.send({
+          name: "UserExistsError",
+          message: "A user by that username already exists",
+        });
       }
-    );
-    res.send({
-      message: "youre signed up",
-      token,
-    });
-  } catch ({ name, message }) {
-    next({ name, message });
-  }
-});
-usersRouter.post("/login", async (req, res, next) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    next({
-      name: "need username and password",
-      message: "enter a username and password",
-    });
-  }
-  try {
-    const user = await getUserByUsername(username);
-    if (user && user.password == password) {
-      const token = jwt.sign(
-        { id: user.id, username: user.username },
-        process.env.JWT_SECRET
-      );
-      res.send({ message: "logged in", token });
-    } else {
-      next({
-        name: "invalid login",
-        message: "invalid login",
-      });
+
+      res.send({ rows });
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
+  });
+});
+
+// usersRouter.post("/register", async (req, res, next) => {
+//   const { email, password } = req.body;
+//   console.log(email, password);
+//   try {
+//     const _user = await registerUser({ email, password });
+//     if (_user.length === 0) {
+//       res.send({
+//         name: "UserExistsError",
+//         message: "A user by that username already exists",
+//       });
+//     }
+//     const [newUser] = _user;
+//     console.log(process.env.JWT_SECRET);
+//     const token = jwt.sign(
+//       {
+//         id: newUser.id,
+//         email,
+//       },
+//       process.env.JWT_SECRET,
+//       {
+//         expiresIn: "1w",
+//       }
+//     );
+//     res.send({
+//       message: "youre signed up",
+//       token,
+//     });
+//   } catch ({ name, message }) {
+//     next({ name, message });
+//   }
+// });
+usersRouter.post("/login", async (req, res, next) => {
+  const { email, password } = req.body;
+  try {
+    const rows = await getUserByEmail({email});
+
+    if (rows.length === 0) {
+      res.send({ message: "user does not exist in database" });
+    }
+    let hashed = rows[0].password;
+    const { id } = rows[0];
+  
+    bcrypt.compare(password, hashed, function (err, passwordsMatch) {
+      if (passwordsMatch) {
+        console.log("userloggedin");
+        const token = jwt.sign(
+          { email, id: id },
+          process.env.JWT_SECRET
+        );
+        console.log(token);
+        req.user = { email, id: id };
+        res.send({ token });
+      } else {
+        throw err;
+      }
+    });
   } catch (error) {
-    console.log(error);
-    next(error);
+    throw error;
   }
 });
+//should orders have its own route file?
+usersRouter.get("/orders", requireUser, async function(req, res, next){
+console.log("Hello")
+
+})
 
 module.exports = usersRouter;
