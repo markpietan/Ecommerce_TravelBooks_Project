@@ -102,8 +102,16 @@ usersRouter.post("/login", async (req, res, next) => {
   }
 });
 //should orders have its own route file?
-usersRouter.get("/orders", requireUser, async function(req, res, next){
-console.log("Hello")
+usersRouter.get("/orders/:userid", async function(req, res, next){
+try {
+  const orders = await getUserOrders({id: req.params.userid })
+  if (orders.length === 0) {
+    return res.send({Message:"You have no orders"})
+  }
+  res.send(orders)
+} catch (error) {
+  throw error
+}
 
 })
 

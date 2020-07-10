@@ -1,6 +1,6 @@
 const { client } = require("./index");
 // await client.connect()
-
+const {createOrder} = require("./order")
 async function registerUser({ email, password }) {
   try {
     const response = await client.query(
@@ -86,14 +86,64 @@ async function getUserById({ id }) {
 
 async function createOrderFromCart({ id }) {
   try {
-    const usercart = await getUserCart({id})
-      
-    console.log(usercart.rows);
-    return response.rows;
+    const cart = await getUserCart({ id });
+    if (cart.length <= 0) {
+      return { Message: "Cart cannot be empty", Success: false };
+    }
+    console.log(cart);
+    let total = 0;
+    cart.forEach((product) => {
+      total += product.price * product.amount;
+    });
+    console.log(total);
+    const [order] = await createOrder({ confirmation: "jkndskbkdsb", total });
+    console.log(order);
+    // const deletedCart = await deleteCart({ id: userid });
+    // console.log(deletedCart);
+    
+    const orderDetailes = await addProductsToOrder({userid: id, orderid: order.id, cart})
+    return { Message: "Successfully created order", Success: true };
+    // return response.rows;
   } catch (error) {
     throw error;
   }
 }
+
+async function addProductsToOrder({userid, orderid, cart = []}){
+try {
+  for (let index = 0; index < cart.length; index++) {
+    const product = cart[index];
+    const [response] = await addProductToOrder({userid, orderid, productid: product.id, amount: product.amount})
+    console.log(response)
+  }
+  return undefined
+} catch (error) {
+  throw error
+}
+
+}
+// INSERT INTO userorders("userid", "productid", "orderid", amount)
+//     VALUES(182, 67, 179, 1000)
+//     ON CONFLICT ("productid", "userid", "orderid") DO UPDATE SET amount = 2000 + userorders.amount
+//     RETURNING *;
+async function addProductToOrder({userid, orderid, productid, amount}){
+try {
+  console.log(userid, productid, orderid, amount)
+  const response = await client.query(`
+    INSERT INTO userorders("userid", "productid", "orderid", amount)
+    VALUES($1, $2, $3, $4)
+    ON CONFLICT ("productid", "userid", "orderid") DO UPDATE SET amount = ${amount} + userorders.amount
+    RETURNING *;
+    
+  `, [userid, productid, orderid, amount])
+  console.log(response.rows)
+  return response.rows
+} catch (error) {
+  throw error
+}
+
+}
+
 
 async function getUserCart({ id }) {
   try {
@@ -158,5 +208,7 @@ module.exports = {
   getUserByEmail,
   deleteCart,
   createOrderFromCart,
-  addToCart
+  addToCart,
+  addProductToOrder,
+  addProductsToOrder
 };
