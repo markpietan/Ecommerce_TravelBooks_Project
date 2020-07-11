@@ -5,18 +5,16 @@ const {
   getUserCart,
   addToCart,
   deleteCart,
+  createOrderFromCart,
 } = require("./../db/users");
+const productsRouter = require("./products");
+const { createOrder } = require("../db/order");
 
 cartsRouter.get("/neworder/:userid", async function (req, res, next) {
   const userid = req.params.userid;
   try {
-    // const cart = await deleteCart({id: userid})
-    const cart = await getUserCart({ id: userid });
-    if (cart.length <= 0) {
-      res.send({ Message: "Cart cannot be empty", Success: false });
-    }
-    
-    // res.send({Message: "Successfully deleted", Success: true})
+      const response = await createOrderFromCart({id: userid})
+      console.log(response)
   } catch (error) {
     throw error;
   }
