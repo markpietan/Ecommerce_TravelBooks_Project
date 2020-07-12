@@ -1,3 +1,7 @@
+*{
+  box-sizing: border-box;
+}
+
 .signUpSection {
   display: flex;
   flex-direction: column;
@@ -34,6 +38,7 @@
 }
 
 .passwordInput {
+  width: 50%;
   margin-bottom: 25px;
 }
 
