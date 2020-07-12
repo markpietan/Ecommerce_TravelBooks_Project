@@ -1,5 +1,17 @@
 import React, { Component } from "react";
 import axios from "axios";
+// import React, { useState } from "react";
+import "./SignUp.css";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  FormHelperText,
+  Input,
+  Container,
+  TextField,
+} from "@material-ui/core";
+
 
 export default class Registration extends Component {
   constructor(props) {
@@ -98,17 +110,7 @@ export default class Registration extends Component {
 
 
 
-// import React, { useState } from "react";
-// import "./SignUp.css";
-// import {
-//   Button,
-//   FormControl,
-//   InputLabel,
-//   FormHelperText,
-//   Input,
-//   Container,
-//   TextField,
-// } from "@material-ui/core";
+
 
 // function SignUp() {
 //   function onEmailChange(e) {
