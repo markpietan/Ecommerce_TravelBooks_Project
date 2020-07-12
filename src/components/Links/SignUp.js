@@ -1,5 +1,15 @@
 import React, { Component } from "react";
 import axios from "axios";
+import "./SignUp.css";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  FormHelperText,
+  Input,
+  Container,
+  TextField,
+} from "@material-ui/core";
 
 export default class Registration extends Component {
   constructor(props) {
