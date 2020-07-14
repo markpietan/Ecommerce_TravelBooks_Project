@@ -16,6 +16,7 @@ const {
 usersRouter.post("/register", (req, res, next) => {
   const { email, password } = req.body;
   const SALT_COUNT = 10;
+  console.log(email, password)
   if (password.length < 8) {
     res.send({ message: "password must be 8 characters" });
   }

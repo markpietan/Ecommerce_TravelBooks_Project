@@ -49,3 +49,11 @@
 .loginWithGoogle {
   margin-bottom: 25px;
 }
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  place-items: center center;
+  padding: 15%;
+}
