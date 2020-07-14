@@ -104,7 +104,7 @@ async function populateInitialData() {
     } else {
       console.log("Email is already in use");
     }
-    const response = await getUserOrders({ id: 182 });
+    // const response = await getUserOrders({ id: 182 });
     // create useful starting data
   } catch (error) {
     throw error;

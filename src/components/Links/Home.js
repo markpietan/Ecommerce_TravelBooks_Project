@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import "./Home.css";
-<<<<<<< HEAD
-=======
 import Button from "@material-ui/core/Button";
->>>>>>> 731bea3b8947de1f5aa18f6bf132df0be2135957
 import Item from "./Item.js";
 
 function Home() {
@@ -20,8 +17,6 @@ function Home() {
     </div>
   );
 }
-<<<<<<< HEAD
-=======
 
 export default Home;
 
@@ -265,7 +260,6 @@ export default Home;
 //             <Button className="plus">+</Button>
 //           </div>
 //         </div>
->>>>>>> 731bea3b8947de1f5aa18f6bf132df0be2135957
 
 //         <div className="testProduct">
 //           <div className="importantText">
