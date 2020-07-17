@@ -4,7 +4,7 @@ const server = express();
 const stripe = require("stripe")(
   "sk_test_518heLIHvs9PrrMbVIDjZ7IHuy45NCXN3NWU4ShglQg7ggDKHfPVPOLch8uquGCJJb3yNAddJFNexTpaSscYRK5SU00TlT3CV1u"
 );
-const uuid = require("uuid/v4");
+const uuid = require("uuid");
 
 // create logs for everything
 const morgan = require("morgan");
