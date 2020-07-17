@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { JWT_SECRET } = process.env;
 const bcrypt = require("bcrypt");
-const {requireUser} = require("./../src/api/utils")
+const { requireUser } = require("./../src/api/utils");
 const {
   registerUser,
   logInUser,
@@ -15,6 +15,7 @@ const {
 
 usersRouter.post("/register", (req, res, next) => {
   const { email, password } = req.body;
+  console.log("registering", email, password);
   const SALT_COUNT = 10;
   console.log(email, password)
   if (password.length < 8) {
@@ -77,21 +78,18 @@ usersRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
   console.log(email, password)
   try {
-    const rows = await getUserByEmail({email});
-     console.log(rows)
+    const rows = await getUserByEmail({ email });
+
     if (rows.length === 0) {
       res.send({ message: "user does not exist in database", success: false });
     }
     let hashed = rows[0].password;
     const { id } = rows[0];
-  
+
     bcrypt.compare(password, hashed, function (err, passwordsMatch) {
       if (passwordsMatch) {
         console.log("userloggedin");
-        const token = jwt.sign(
-          { email, id: id },
-          process.env.JWT_SECRET
-        );
+        const token = jwt.sign({ email, id: id }, process.env.JWT_SECRET);
         console.log(token);
         req.user = { email, id: id };
         res.send({ token, success: true });
@@ -104,21 +102,20 @@ usersRouter.post("/login", async (req, res, next) => {
   }
 });
 //should orders have its own route file?
-usersRouter.get("/orders/:userid", async function(req, res, next){
-try {
-  const orders = await getUserOrders({id: req.params.userid })
-  if (orders.length === 0) {
-    return res.send({Message:"You have no orders"})
+usersRouter.get("/orders/:userid", async function (req, res, next) {
+  try {
+    const orders = await getUserOrders({ id: req.params.userid });
+    if (orders.length === 0) {
+      return res.send({ Message: "You have no orders" });
+    }
+    //format the array before sending to the front end...
+    //the array has multiple orders that are associated with the user...
+    //loop through the array and combine all products from one specific order into an array....
+    //console.log(orders) to check...
+    res.send(orders);
+  } catch (error) {
+    throw error;
   }
-  //format the array before sending to the front end...
-  //the array has multiple orders that are associated with the user...
-  //loop through the array and combine all products from one specific order into an array....
-  //console.log(orders) to check...
-  res.send(orders)
-} catch (error) {
-  throw error
-}
-
-})
+});
 
 module.exports = usersRouter;

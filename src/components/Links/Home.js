@@ -1,10 +1,21 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import Button from "@material-ui/core/Button";
 import Item from "./Item.js";
-
+import Axios from "axios";
+import { getAllProducts } from "../../api/products";
 function Home() {
   const [items, setItems] = useState([1, 2, 3, 4, 5]);
+
+  useEffect(() => {
+    // Create an scoped async function in the hook
+    async function getProducts() {
+      const data = await getAllProducts();
+      setItems(data);
+    }
+    // Execute the created function directly
+    getProducts();
+  }, []);
 
   return (
     <div className="homePage">
