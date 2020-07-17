@@ -15,6 +15,15 @@ import "./main.css";
 const App = () => {
   const [currentUser, setcurrentUser] = useState(null);
   const [loginAlert, setloginAlert] = useState(true);
+  const [cart, setCart] = useState([]);
+
+  function addToCart(product, numInCart){
+    alert("Add to cart called")
+   const cartCopy = Array.from(cart)
+   cartCopy.push({numInCart, ...product})
+   setCart(cartCopy)
+  }
+
   async function onLogInClick(email, password) {
     console.log(email, password);
     const data = await logIn(email, password);
@@ -45,10 +54,10 @@ const App = () => {
       </Fade> */}
       <Router>
         <div className="App">
-          <Nav />
+          <Nav cart={cart}/>
           <Switch>
             <Route path="/home">
-              <Home></Home>
+              <Home addToCart={addToCart}></Home>
             </Route>
             <Route path="/cart">
               <Cart></Cart>

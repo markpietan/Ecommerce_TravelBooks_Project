@@ -6,7 +6,7 @@ import product from "./product";
 
 console.log(data);
 
-export default function Item({ item }) {
+export default function Item({ item, addToCart }) {
   const [number, setNumber] = useState(1);
   const incrementClickCount = () => {
     setNumber(number + 1);
@@ -32,7 +32,7 @@ export default function Item({ item }) {
         </Button>
       </div>
       <div className="addToCart">
-        <Button className="addToButton">Add To Cart</Button>
+        <Button className="addToButton" onClick= {() => {addToCart(item, number)}}>Add To Cart</Button>
       </div>
     </div>
   );
