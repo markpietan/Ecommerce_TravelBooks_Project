@@ -76,11 +76,12 @@ usersRouter.post("/register", (req, res, next) => {
 // });
 usersRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
+  console.log(email, password)
   try {
     const rows = await getUserByEmail({ email });
 
     if (rows.length === 0) {
-      res.send({ message: "user does not exist in database" });
+      res.send({ message: "user does not exist in database", success: false });
     }
     let hashed = rows[0].password;
     const { id } = rows[0];
@@ -91,7 +92,7 @@ usersRouter.post("/login", async (req, res, next) => {
         const token = jwt.sign({ email, id: id }, process.env.JWT_SECRET);
         console.log(token);
         req.user = { email, id: id };
-        res.send({ token });
+        res.send({ token, success: true });
       } else {
         throw err;
       }

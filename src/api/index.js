@@ -1,13 +1,13 @@
-import axios from 'axios';
-import {logInUser} from "./../../db/users"
-export async function logIn() {
+import axios from "axios";
+export async function logIn(email, password) {
   try {
-    const { data } = await axios.get('/api/users/login');
+    const temp = {
+      email,
+      password,
+    };
+    const { data } = await axios.post("/api/users/login", temp);
     return data;
   } catch (error) {
     throw error;
   }
 }
-
-
-
