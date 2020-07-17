@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
+import "./Item.css";
 
 export default function Item({ item }) {
   const [number, setNumber] = useState(1);
@@ -13,9 +14,9 @@ export default function Item({ item }) {
   return (
     <div className="testProduct">
       <div className="importantText">
-        <h4>item</h4>
-        <h4>img here...</h4>
-        <h4>Price</h4>
+        <h4>product.name</h4>
+        <h4>product.image</h4>
+        <h4>product.price</h4>
       </div>
       <div className="add_remove">
         <Button className="minus" onClick={deccrementClickCount}>
@@ -25,6 +26,9 @@ export default function Item({ item }) {
         <Button className="plus" onClick={incrementClickCount}>
           +
         </Button>
+      </div>
+      <div className="addToCart">
+        <Button className="addToButton">Add To Cart</Button>
       </div>
     </div>
   );
