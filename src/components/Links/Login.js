@@ -47,14 +47,13 @@ function Login({ onLogInClick }) {
         ></TextField>
         <Button
           type="submit"
-          color= "primary"
-          variant= "contained"
+          color="primary"
+          variant="contained"
           onClick={(e) => {
             e.preventDefault();
             if (email !== "" && password !== "") {
               onLogInClick(email, password);
             }
-            
           }}
         >
           Sign In

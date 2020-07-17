@@ -20,7 +20,7 @@ function Cart() {
       "Content-Type": "application/json",
     };
 
-    return fetch(`http://localhost:3002/payment`, {
+    return fetch(`http://localhost:3000/payment`, {
       method: "POST",
       headers,
       body: JSON.stringify(body),
