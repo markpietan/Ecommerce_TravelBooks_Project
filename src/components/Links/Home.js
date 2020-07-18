@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
-import Button from "@material-ui/core/Button";
+import {
+  Button,
+  Grid,
+  Card,
+  CardActionArea,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Container,
+  Typography,
+} from "@material-ui/core";
 import Item from "./Item.js";
-import Axios from "axios";
 import { getAllProducts } from "../../api/products";
-function Home({addToCart}) {
+import products from "./product"
+function Home({ addToCart }) {
   const [items, setItems] = useState([1, 2, 3, 4, 5]);
 
   useEffect(() => {
@@ -18,40 +28,56 @@ function Home({addToCart}) {
   }, []);
 
   return (
-    <div className="homePage">
-      <h1 className="title">Home Page</h1>
-      <h3 className="testTitle">Products down below</h3>
-      {items.map((item) => {
-        return <Item item={item} key= {item.id} addToCart={addToCart}></Item>;
-      })}
-    </div>
+    <Container>
+      <Grid container spacing={4}>
+        {products.map(function (item) {
+          return (
+            <Grid item className= "grid-item">
+              <Card>
+                <CardActionArea>
+                  <CardMedia
+                    image = {item.image}
+                    component="img"
+                    alt={""}
+                    height="140"
+                    title={item.name}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                     {item.name}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                    {""}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  <Button size="small" color="primary">
+                    Add to Cart
+                  </Button>
+                  <Button size="small" color="primary">
+                    Learn More
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Container>
+
+    // <div className="homePage">
+    //   <h1 className="title">Home Page</h1>
+    //   <h3 className="testTitle">Products down below</h3>
+    //   {items.map((item) => {
+    //     return <Item item={item} key= {item.id} addToCart={addToCart}></Item>;
+    //   })}
+    // </div>
   );
 }
 
 export default Home;
-
-// function Home() {
-//   return (
-//     <div className="homePage">
-//       <h1 className="title">Home Page</h1>
-//       <h3 className="testTitle">Products down below</h3>
-
-//       <div className="productSection">
-//         <div className="testProduct">
-//           <div className="importantText">
-//             <h4>Test Product 1</h4>
-//             <h4>img here...</h4>
-//             <h4>Price</h4>
-//           </div>
-//           <div className="add_remove">
-//             <Button className="minus">-</Button>
-//             <h4 className="quantity"> 1 </h4>
-//             <Button className="plus">+</Button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Home;

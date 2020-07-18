@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import "./Item.css";
-import data from "./product";
-import product from "./product";
 
-console.log(data);
 
 export default function Item({ item, addToCart }) {
   const [number, setNumber] = useState(1);

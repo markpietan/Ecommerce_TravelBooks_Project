@@ -1,5 +1,5 @@
-export default {
-  product: [
+export default 
+  [
     {
       _id: "1",
       name: "Australia",
@@ -156,5 +156,5 @@ export default {
       reviews: 10,
       countInStock: 5,
     },
-  ],
-};
+  ];
+

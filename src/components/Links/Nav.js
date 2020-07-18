@@ -19,36 +19,39 @@ import Badge from "@material-ui/core/Badge";
 function Nav({ cart }) {
   const [value, setValue] = useState("1");
   // let itemsInCart = 0;
-  const [itemsInCart, setItemsInCart] = useState(0)
+  const [itemsInCart, setItemsInCart] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  useEffect(function () {
-    let temp = 0
-    cart.forEach((product) => {
-      temp += product.numInCart;
-    });
-    setItemsInCart(temp)
-  }, [cart]);
+  useEffect(
+    function () {
+      let temp = 0;
+      cart.forEach((product) => {
+        temp += product.numInCart;
+      });
+      setItemsInCart(temp);
+    },
+    [cart]
+  );
   return (
     <div>
       <TabContext value={value}>
         <AppBar position="static">
-          <TabList onChange={handleChange} aria-label="simple tabs example">
-            <NavLink to="/" exact>
+          <TabList onChange={handleChange} aria-label="simple tabs example" variant= "fullWidth">
+            <NavLink to="/" exact className="tab" >
               <Tab
                 label="Main"
-                value="0"
+                value="1"
                 icon={<LibraryBooksIcon></LibraryBooksIcon>}
               />
             </NavLink>
-            <NavLink to="/home">
-              <Tab label="Home" value="1" icon={<HomeIcon></HomeIcon>} />
+            <NavLink to="/home" className="tab">
+              <Tab label="Home" value="2" icon={<HomeIcon></HomeIcon>} />
             </NavLink>
-            <NavLink to="/cart">
+            <NavLink to="/cart" className="tab">
               <Tab
                 label="Cart"
-                value="2"
+                value="3"
                 icon={
                   <Badge badgeContent={itemsInCart} color="secondary">
                     <ShoppingCartIcon></ShoppingCartIcon>
@@ -56,17 +59,17 @@ function Nav({ cart }) {
                 }
               />
             </NavLink>
-            <NavLink to="/signup" activeClassName="active">
+            <NavLink to="/signup" activeClassName="active" className="tab">
               <Tab
                 label="Sign-up"
-                value="3"
+                value="4"
                 icon={<PersonAddIcon></PersonAddIcon>}
               />
             </NavLink>
-            <NavLink to="login">
+            <NavLink to="login" className="tab">
               <Tab
                 label="Log-in"
-                value="4"
+                value="5"
                 icon={<AccountBoxIcon></AccountBoxIcon>}
               />
             </NavLink>

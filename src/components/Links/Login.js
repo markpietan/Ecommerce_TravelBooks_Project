@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { Button, TextField, Container, Box} from "@material-ui/core";
+import { Button, TextField, Container, Typography} from "@material-ui/core";
+
 
 
 function Login({ onLogInClick }) {
@@ -18,6 +19,7 @@ function Login({ onLogInClick }) {
 
   return (
     <Container>
+      <Typography variant= "h2" component= "h2" align= "center">Log-In</Typography>
       <form>
         <TextField
           label="Email"
@@ -61,33 +63,8 @@ function Login({ onLogInClick }) {
         </Button>
       </form>
     </Container>
-    // <div className="loginPage">
-    //   <h1 className="loginTitle">Login Page</h1>
-    //   <div className="loginSection">
-    //     <h2 className="emailText">Email:</h2>
-    //     <input
-    //       type="text"
-    //       placeholder="Enter email..."
-    //       className="emailInput"
-    //       value={email}
-    //       onChange={onEmailChange}
-    //     ></input>
-    //     <h2 className="passwordText">Password:</h2>
-    //     <input
-    //       type="password"
-    //       placeholder="Enter Password..."
-    //       className="passwordInput"
-    //       value={password}
-    //       onChange={onPasswordChange}
-    //     ></input>
-    //     <div className="loginButton">
-    //       <Button variant="contained">Login</Button>
-    //     </div>
-    //     <div className="loginWithGoogle">
-    //       <Button variant="contained">Login With Google</Button>
-    //     </div>
-    //   </div>
-    // </div>
+      
+
   );
 }
 
