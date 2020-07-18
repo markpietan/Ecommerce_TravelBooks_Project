@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import Item from "./Item.js";
 import Axios from "axios";
 import { getAllProducts } from "../../api/products";
-function Home() {
+function Home({addToCart}) {
   const [items, setItems] = useState([1, 2, 3, 4, 5]);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function Home() {
       <h1 className="title">Home Page</h1>
       <h3 className="testTitle">Products down below</h3>
       {items.map((item) => {
-        return <Item item={item}></Item>;
+        return <Item item={item} key= {item.id} addToCart={addToCart}></Item>;
       })}
     </div>
   );
