@@ -9,7 +9,7 @@ import { logIn } from "../api/index";
 import { Button, Container, Fade } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
-import{getToken, logOut, setUser} from "./../api/auth"
+import { getToken, logOut, setUser } from "./../api/auth";
 
 import "./main.css";
 const App = () => {
@@ -17,11 +17,11 @@ const App = () => {
   const [loginAlert, setloginAlert] = useState(true);
   const [cart, setCart] = useState([]);
 
-  function addToCart(product, numInCart){
-    alert("Add to cart called")
-   const cartCopy = Array.from(cart)
-   cartCopy.push({numInCart, ...product})
-   setCart(cartCopy)
+  function addToCart(product, numInCart) {
+    alert("Add to cart called");
+    const cartCopy = Array.from(cart);
+    cartCopy.push({ numInCart, ...product });
+    setCart(cartCopy);
   }
 
   async function onLogInClick(email, password) {
@@ -30,13 +30,18 @@ const App = () => {
     console.log(data);
     if (data.success === true) {
       setcurrentUser(data.token);
-      setUser(data.token)
+      setUser(data.token);
     } else {
     }
   }
-  function onModalExit(){
-    setloginAlert(false)
-    console.log("hello")
+
+  function onLogoutClick() {
+    logOut();
+    setcurrentUser(null);
+  }
+  function onModalExit() {
+    setloginAlert(false);
+    console.log("hello");
   }
   return (
     <>
@@ -54,7 +59,7 @@ const App = () => {
       </Fade> */}
       <Router>
         <div className="App">
-          <Nav cart={cart}/>
+          <Nav cart={cart} onLogoutClick={onLogoutClick} />
           <Switch>
             <Route path="/home">
               <Home addToCart={addToCart}></Home>

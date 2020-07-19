@@ -1,14 +1,11 @@
-*{
-    box-sizing: border-box;
-  }
+* {
+  box-sizing: border-box;
+}
 
-  .active {
+.active {
+  color: rgb(255, 255, 10);
+}
 
-    color: rgb(255, 255, 10)
-  }
-
-  a{
-   color: white
-
-
-  }
+a {
+  color: white;
+}
