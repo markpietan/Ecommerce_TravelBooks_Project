@@ -134,6 +134,7 @@ async function populateInitialData() {
         "https://images-na.ssl-images-amazon.com/images/I/718TnurkpEL._AC_UL200_SR200,200_.jpg",
       price: 60,
       quantity: 5,
+      
     });
     await createProduct({
       _id: "4",

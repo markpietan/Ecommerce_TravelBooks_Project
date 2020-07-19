@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
-import {
-  Button,
-  Grid,
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Container,
-  Typography,
-} from "@material-ui/core";
+import { Grid, Container } from "@material-ui/core";
 import Item from "./Item.js";
 import { getAllProducts } from "../../api/products";
-import products from "./product"
 function Home({ addToCart }) {
-  const [items, setItems] = useState([1, 2, 3, 4, 5]);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     // Create an scoped async function in the hook
@@ -30,41 +19,10 @@ function Home({ addToCart }) {
   return (
     <Container>
       <Grid container spacing={4}>
-        {products.map(function (item) {
+        {items.map(function (item) {
           return (
-            <Grid item className= "grid-item">
-              <Card>
-                <CardActionArea>
-                  <CardMedia
-                    image = {item.image}
-                    component="img"
-                    alt={""}
-                    height="140"
-                    title={item.name}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                     {item.name}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                    {""}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
-                  <Button size="small" color="primary">
-                    Add to Cart
-                  </Button>
-                  <Button size="small" color="primary">
-                    Learn More
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
+            <Item item={item} addToCart={addToCart} key= {item.id}></Item>
+  
           );
         })}
       </Grid>

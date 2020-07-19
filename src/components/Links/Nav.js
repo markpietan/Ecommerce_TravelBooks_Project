@@ -15,6 +15,7 @@ import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Badge from "@material-ui/core/Badge";
+import Hidden from "@material-ui/core/Hidden";
 
 function Nav({ cart }) {
   const [value, setValue] = useState("1");
@@ -37,18 +38,29 @@ function Nav({ cart }) {
     <div>
       <TabContext value={value}>
         <AppBar position="static">
-          <TabList onChange={handleChange} aria-label="simple tabs example" variant= "fullWidth">
-            <NavLink to="/" exact className="tab" >
+          <Hidden only={["lg", "md", "xl", "sm"]}>
+            <TabList
+              onChange={handleChange}
+              aria-label="simple tabs example"
+              variant="scrollable"
+            >
               <Tab
                 label="Main"
                 value="1"
                 icon={<LibraryBooksIcon></LibraryBooksIcon>}
+                component={NavLink}
+                to="/"
+                exact
               />
-            </NavLink>
-            <NavLink to="/home" className="tab">
-              <Tab label="Home" value="2" icon={<HomeIcon></HomeIcon>} />
-            </NavLink>
-            <NavLink to="/cart" className="tab">
+
+              <Tab
+                label="Home"
+                value="2"
+                icon={<HomeIcon></HomeIcon>}
+                component={NavLink}
+                to="/home"
+              />
+
               <Tab
                 label="Cart"
                 value="3"
@@ -57,23 +69,79 @@ function Nav({ cart }) {
                     <ShoppingCartIcon></ShoppingCartIcon>
                   </Badge>
                 }
+                component={NavLink}
+                to="/cart"
               />
-            </NavLink>
-            <NavLink to="/signup" activeClassName="active" className="tab">
+
               <Tab
                 label="Sign-up"
                 value="4"
                 icon={<PersonAddIcon></PersonAddIcon>}
+                component={NavLink}
+                to="/signup"
               />
-            </NavLink>
-            <NavLink to="login" className="tab">
+
               <Tab
                 label="Log-in"
                 value="5"
                 icon={<AccountBoxIcon></AccountBoxIcon>}
+                component={NavLink}
+                to="/login"
               />
-            </NavLink>
-          </TabList>
+            </TabList>
+          </Hidden>
+          <Hidden only="xs">
+            <TabList
+              onChange={handleChange}
+              aria-label="simple tabs example"
+              variant="fullWidth"
+            >
+              <Tab
+                label="Main"
+                value="1"
+                icon={<LibraryBooksIcon></LibraryBooksIcon>}
+                component={NavLink}
+                to="/"
+                exact
+              />
+
+              <Tab
+                label="Home"
+                value="2"
+                icon={<HomeIcon></HomeIcon>}
+                component={NavLink}
+                to="/home"
+              />
+
+              <Tab
+                label="Cart"
+                value="3"
+                icon={
+                  <Badge badgeContent={itemsInCart} color="secondary">
+                    <ShoppingCartIcon></ShoppingCartIcon>
+                  </Badge>
+                }
+                component={NavLink}
+                to="/cart"
+              />
+
+              <Tab
+                label="Sign-up"
+                value="4"
+                icon={<PersonAddIcon></PersonAddIcon>}
+                component={NavLink}
+                to="/signup"
+              />
+
+              <Tab
+                label="Log-in"
+                value="5"
+                icon={<AccountBoxIcon></AccountBoxIcon>}
+                component={NavLink}
+                to="/login"
+              />
+            </TabList>
+          </Hidden>
         </AppBar>
       </TabContext>
     </div>

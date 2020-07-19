@@ -9,7 +9,7 @@ import { logIn } from "../api/index";
 import { Button, Container, Fade } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
-import{getToken, logOut, setUser} from "./../api/auth"
+import { getToken, logOut, setUser } from "./../api/auth";
 
 import "./main.css";
 const App = () => {
@@ -17,11 +17,10 @@ const App = () => {
   const [loginAlert, setloginAlert] = useState(true);
   const [cart, setCart] = useState([]);
 
-  function addToCart(product, numInCart){
-    alert("Add to cart called")
-   const cartCopy = Array.from(cart)
-   cartCopy.push({numInCart, ...product})
-   setCart(cartCopy)
+  function addToCart(product, numInCart) {
+    const cartCopy = Array.from(cart);
+    cartCopy.push({ numInCart, ...product });
+    setCart(cartCopy);
   }
 
   async function onLogInClick(email, password) {
@@ -30,13 +29,33 @@ const App = () => {
     console.log(data);
     if (data.success === true) {
       setcurrentUser(data.token);
-      setUser(data.token)
+      setUser(data.token);
     } else {
     }
   }
-  function onModalExit(){
-    setloginAlert(false)
-    console.log("hello")
+
+  function removeFromCart(item) {
+    const cartCopy = Array.from(cart);
+    const findIndex = cartCopy.findIndex(function (e) {
+      if (e.id === item.id) {
+        return true;
+      }
+      return false;
+    });
+    if (findIndex !== -1) {
+      const found = cartCopy[findIndex];
+      found.numInCart--;
+      if (found.numInCart === 0) {
+        cartCopy.splice(findIndex, 1);
+      }
+    }
+
+    setCart(cartCopy);
+  }
+
+  function onModalExit() {
+    setloginAlert(false);
+    console.log("hello");
   }
   return (
     <>
@@ -54,13 +73,13 @@ const App = () => {
       </Fade> */}
       <Router>
         <div className="App">
-          <Nav cart={cart}/>
+          <Nav cart={cart} />
           <Switch>
             <Route path="/home">
               <Home addToCart={addToCart}></Home>
             </Route>
             <Route path="/cart">
-              <Cart></Cart>
+              <Cart cart={cart} removeFromCart= {removeFromCart} addToCart= {addToCart}></Cart>
             </Route>
             <Route path="/login">
               <Login onLogInClick={onLogInClick}></Login>
