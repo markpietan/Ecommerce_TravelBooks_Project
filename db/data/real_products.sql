@@ -1,2 +1,2 @@
-insert into products (category, quantity, price, imageurl, name, details) values ('Oceania-Australia', 20, 20, 'https://images-na.ssl-images-amazon.com/images/I/51qxYm5NXrL.jpg', 'Australia', );
+insert into products (category, quantity, price, imageurl, name, details) values ('Oceania-Australia', 20, 20, 'https://images-na.ssl-images-amazon.com/images/I/51qxYm5NXrL.jpg', 'Australia');
 insert into products (category, quantity, price, imageurl, name, details) values ('South America', 20, 25.99, 'https://images-na.ssl-images-amazon.com/images/I/91j-JTFhm0L.jpg', 'Chile');
