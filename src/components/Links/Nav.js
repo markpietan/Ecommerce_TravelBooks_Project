@@ -16,20 +16,24 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Badge from "@material-ui/core/Badge";
 
-function Nav({ cart }) {
+function Nav({ cart, onLogoutClick }) {
   const [value, setValue] = useState("1");
   // let itemsInCart = 0;
-  const [itemsInCart, setItemsInCart] = useState(0)
+  const [itemsInCart, setItemsInCart] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  useEffect(function () {
-    let temp = 0
-    cart.forEach((product) => {
-      temp += product.numInCart;
-    });
-    setItemsInCart(temp)
-  }, [cart]);
+  useEffect(
+    function () {
+      let temp = 0;
+      cart.forEach((product) => {
+        temp += product.numInCart;
+      });
+      setItemsInCart(temp);
+    },
+    [cart]
+  );
+
   return (
     <div>
       <TabContext value={value}>
@@ -63,13 +67,24 @@ function Nav({ cart }) {
                 icon={<PersonAddIcon></PersonAddIcon>}
               />
             </NavLink>
-            <NavLink to="login">
-              <Tab
-                label="Log-in"
-                value="4"
-                icon={<AccountBoxIcon></AccountBoxIcon>}
-              />
-            </NavLink>
+            {localStorage.getItem("lsid") ? (
+              <NavLink to="login">
+                <Tab
+                  label="Log-in"
+                  value="4"
+                  icon={<AccountBoxIcon></AccountBoxIcon>}
+                />
+              </NavLink>
+            ) : (
+              <NavLink to="/home">
+                <Tab
+                  label="Log-out"
+                  value="5"
+                  onClick={onLogoutClick}
+                  icon={<AccountBoxIcon></AccountBoxIcon>}
+                />
+              </NavLink>
+            )}
           </TabList>
         </AppBar>
       </TabContext>
