@@ -11,6 +11,22 @@ export default function Registration() {
     password_confirmation: "",
   });
 
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [confirm, setConfirm] = useState("");
+
+  // function onEmailChange(event) {
+  //   setEmail(event.target.value);
+  // }
+
+  // function onPasswordChange(event) {
+  //   setPassword(event.target.value);
+  // }
+
+  // function onConfirmChange(event) {
+  //   setConfirm(event.target.value);
+  // }
+
   function handleChange(event) {
     setUser({ ...user, [event.target.name]: event.target.value });
   }
@@ -82,4 +98,3 @@ export default function Registration() {
     </Container>
   );
 }
-

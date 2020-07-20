@@ -46,11 +46,11 @@ function Nav({ cart, onLogoutClick, currentUser }) {
             >
               <Tab
                 label="Main"
+                exact
+                to="/"
                 value="1"
                 icon={<LibraryBooksIcon></LibraryBooksIcon>}
                 component={NavLink}
-                to="/"
-                exact
               />
 
               <Tab
