@@ -17,7 +17,7 @@ usersRouter.post("/register", (req, res, next) => {
   const { email, password } = req.body;
   console.log("registering", email, password);
   const SALT_COUNT = 10;
-  console.log(email, password)
+  console.log(email, password);
   if (password.length < 8) {
     res.send({ message: "password must be 8 characters" });
   }
@@ -76,7 +76,7 @@ usersRouter.post("/register", (req, res, next) => {
 // });
 usersRouter.post("/login", async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email, password)
+  console.log(email, password);
   try {
     const rows = await getUserByEmail({ email });
 
@@ -92,7 +92,7 @@ usersRouter.post("/login", async (req, res, next) => {
         const token = jwt.sign({ email, id: id }, process.env.JWT_SECRET);
         console.log(token);
         req.user = { email, id: id };
-        res.send({ token, success: true });
+        res.send({ token, success: true, id });
       } else {
         throw err;
       }
