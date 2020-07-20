@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 
 import { Nav, Home, Cart, Login, SignUp } from "./Links";
 
-import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+} from "react-router-dom";
 
 import { logIn } from "../api/index";
 
@@ -13,14 +18,14 @@ import { getToken, logOut, setUser } from "./../api/auth";
 
 import "./main.css";
 const App = () => {
-  const history = useHistory()
+  const history = useHistory();
   const [currentUser, setcurrentUser] = useState(null);
   const [loginAlert, setloginAlert] = useState(true);
   const [cart, setCart] = useState([]);
   useEffect(function () {
     const token = getToken();
     console.log(token);
-    if (token !== undefined) {
+    if (token) {
       setcurrentUser(token);
     }
   }, []);
@@ -47,7 +52,7 @@ const App = () => {
     console.log(email, password);
     const data = await logIn(email, password);
     console.log(data);
-    console.log(history)
+    console.log(history);
     if (data.success === true) {
       setcurrentUser({ id: data.id, token: data.token });
       setUser({ id: data.id, token: data.token });
