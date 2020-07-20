@@ -17,7 +17,7 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Badge from "@material-ui/core/Badge";
 import Hidden from "@material-ui/core/Hidden";
 
-function Nav({ cart }) {
+function Nav({ cart, onLogoutClick }) {
   const [value, setValue] = useState("1");
   // let itemsInCart = 0;
   const [itemsInCart, setItemsInCart] = useState(0);
