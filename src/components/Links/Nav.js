@@ -15,6 +15,7 @@ import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Badge from "@material-ui/core/Badge";
+import Hidden from "@material-ui/core/Hidden";
 
 function Nav({ cart, onLogoutClick }) {
   const [value, setValue] = useState("1");
@@ -33,59 +34,114 @@ function Nav({ cart, onLogoutClick }) {
     },
     [cart]
   );
-
   return (
     <div>
       <TabContext value={value}>
         <AppBar position="static">
-          <TabList onChange={handleChange} aria-label="simple tabs example">
-            <NavLink to="/" exact>
+          <Hidden only={["lg", "md", "xl", "sm"]}>
+            <TabList
+              onChange={handleChange}
+              aria-label="simple tabs example"
+              variant="scrollable"
+            >
               <Tab
                 label="Main"
-                value="0"
+                value="1"
                 icon={<LibraryBooksIcon></LibraryBooksIcon>}
+                component={NavLink}
+                to="/"
+                exact
               />
-            </NavLink>
-            <NavLink to="/home">
-              <Tab label="Home" value="1" icon={<HomeIcon></HomeIcon>} />
-            </NavLink>
-            <NavLink to="/cart">
+
+              <Tab
+                label="Home"
+                value="2"
+                icon={<HomeIcon></HomeIcon>}
+                component={NavLink}
+                to="/home"
+              />
+
               <Tab
                 label="Cart"
-                value="2"
+                value="3"
                 icon={
                   <Badge badgeContent={itemsInCart} color="secondary">
                     <ShoppingCartIcon></ShoppingCartIcon>
                   </Badge>
                 }
+                component={NavLink}
+                to="/cart"
               />
-            </NavLink>
-            <NavLink to="/signup" activeClassName="active">
+
               <Tab
                 label="Sign-up"
-                value="3"
+                value="4"
                 icon={<PersonAddIcon></PersonAddIcon>}
+                component={NavLink}
+                to="/signup"
               />
-            </NavLink>
-            {localStorage.getItem("lsid") ? (
-              <NavLink to="login">
-                <Tab
-                  label="Log-in"
-                  value="4"
-                  icon={<AccountBoxIcon></AccountBoxIcon>}
-                />
-              </NavLink>
-            ) : (
-              <NavLink to="/home">
-                <Tab
-                  label="Log-out"
-                  value="5"
-                  onClick={onLogoutClick}
-                  icon={<AccountBoxIcon></AccountBoxIcon>}
-                />
-              </NavLink>
-            )}
-          </TabList>
+
+              <Tab
+                label="Log-in"
+                value="5"
+                icon={<AccountBoxIcon></AccountBoxIcon>}
+                component={NavLink}
+                to="/login"
+              />
+            </TabList>
+          </Hidden>
+          <Hidden only="xs">
+            <TabList
+              onChange={handleChange}
+              aria-label="simple tabs example"
+              variant="fullWidth"
+            >
+              <Tab
+                label="Main"
+                value="1"
+                icon={<LibraryBooksIcon></LibraryBooksIcon>}
+                component={NavLink}
+                to="/"
+                exact
+              />
+
+              <Tab
+                label="Home"
+                value="2"
+                icon={<HomeIcon></HomeIcon>}
+                component={NavLink}
+                to="/home"
+              />
+
+              <Tab
+                label="Cart"
+                value="3"
+                icon={
+                  <Badge badgeContent={itemsInCart} color="secondary">
+                    <ShoppingCartIcon></ShoppingCartIcon>
+                  </Badge>
+                }
+                component={NavLink}
+                to="/cart"
+              />
+
+              <Tab
+                label="Sign-up"
+                value="4"
+                icon={<PersonAddIcon></PersonAddIcon>}
+                component={NavLink}
+                to="/signup"
+              />
+
+              <Tab
+                label="Log-in"
+                value="5"
+                icon={<AccountBoxIcon></AccountBoxIcon>}
+                component={NavLink}
+                to="/login"
+              />
+            </TabList>
+          </Hidden>
         </AppBar>
       </TabContext>
     </div>

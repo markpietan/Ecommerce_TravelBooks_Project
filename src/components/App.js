@@ -18,7 +18,6 @@ const App = () => {
   const [cart, setCart] = useState([]);
 
   function addToCart(product, numInCart) {
-    alert("Add to cart called");
     const cartCopy = Array.from(cart);
     cartCopy.push({ numInCart, ...product });
     setCart(cartCopy);
@@ -35,10 +34,25 @@ const App = () => {
     }
   }
 
-  function onLogoutClick() {
-    logOut();
-    setcurrentUser(null);
+  function removeFromCart(item) {
+    const cartCopy = Array.from(cart);
+    const findIndex = cartCopy.findIndex(function (e) {
+      if (e.id === item.id) {
+        return true;
+      }
+      return false;
+    });
+    if (findIndex !== -1) {
+      const found = cartCopy[findIndex];
+      found.numInCart--;
+      if (found.numInCart === 0) {
+        cartCopy.splice(findIndex, 1);
+      }
+    }
+
+    setCart(cartCopy);
   }
+
   function onModalExit() {
     setloginAlert(false);
     console.log("hello");
@@ -59,13 +73,13 @@ const App = () => {
       </Fade> */}
       <Router>
         <div className="App">
-          <Nav cart={cart} onLogoutClick={onLogoutClick} />
+          <Nav cart={cart} />
           <Switch>
             <Route path="/home">
               <Home addToCart={addToCart}></Home>
             </Route>
             <Route path="/cart">
-              <Cart></Cart>
+              <Cart cart={cart} removeFromCart= {removeFromCart} addToCart= {addToCart}></Cart>
             </Route>
             <Route path="/login">
               <Login onLogInClick={onLogInClick}></Login>

@@ -1,17 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
 
 import "./SignUp.css";
 import { registerUser } from "../../api/users";
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  FormHelperText,
-  Input,
-  Container,
-  TextField,
-} from "@material-ui/core";
+import { Button, Container, TextField, Typography } from "@material-ui/core";
 
 export default function Registration() {
   const [user, setUser] = useState({
@@ -30,127 +21,62 @@ export default function Registration() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
+    <Container>
+      <Typography variant="h2" component="h2" align="center">
+        Sign-Up
+      </Typography>
+      <form>
+        <TextField
+          label="Email"
+          style={{ margin: 8 }}
+          placeholder="Enter email"
+          size="medium"
+          variant="outlined"
+          margin="normal"
+          className="emailInput"
+          required
           value={user.email}
           onChange={handleChange}
+          fullWidth
+        ></TextField>
+        <TextField
+          label="Password"
+          style={{ margin: 8 }}
+          placeholder="Enter password"
+          size="medium"
+          variant="outlined"
+          margin="normal"
+          className="passwordInput"
           required
-        />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
           value={user.password}
           onChange={handleChange}
-          required
-        />
-
-        <input
           type="password"
-          name="password_confirmation"
-          placeholder="Password confirmation"
+          fullWidth
+        ></TextField>
+        <TextField
+          label="Confirm Password"
+          style={{ margin: 8 }}
+          placeholder="Re-enter password"
+          size="medium"
+          variant="outlined"
+          margin="normal"
+          className="passwordInput"
+          required
           value={user.password_confirmation}
           onChange={handleChange}
-          required
-        />
-
-        <button type="submit">Register</button>
+          type="password"
+          fullWidth
+        ></TextField>
+        <Button
+          type="submit"
+          color="primary"
+          variant="contained"
+          onClick={handleSubmit}
+        >
+          Register
+        </Button>
       </form>
-    </div>
+    </Container>
   );
 }
 
-// function SignUp() {
-//   function onEmailChange(e) {
-//     setEmail(e.target.value);
-//   }
-
-//   function onPasswordChange(e) {
-//     setPassword(e.target.value);
-//   }
-
-//   function onConfirmPasswordChange(e) {
-//     setConfirmPassword(e.target.value);
-//   }
-
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [confirmPassword, setConfirmPassword] = useState("");
-//   return (
-//     <Container>
-//       <form autoComplete>
-//         <TextField
-//           id="standard-full-width"
-//           label="Email"
-//           style={{ margin: 8 }}
-//           placeholder="Enter email"
-//           fullWidth
-//           margin="normal"
-//         />
-//         <TextField
-//           id="standard-full-width"
-//           label="Email"
-//           style={{ margin: 8 }}
-//           placeholder="Enter email"
-//           size="medium"
-//           variant="outlined"
-//           margin="normal"
-//           className="passwordInput"
-//         />
-//         <TextField
-//           id="standard-full-width"
-//           label="Email"
-//           style={{ margin: 8 }}
-//           placeholder="Enter email"
-//           size="medium"
-//           margin="normal"
-//           className="passwordInput"
-//         />
-//       </form>
-//     </Container>
-//   );
-// return (
-//   <div className="signUpPage">
-//     <h1 className="signUpTitle">Sign Up Page</h1>
-//     <div className="signUpSection">
-//       <h2 className="emailText">Email:</h2>
-//       <input
-//         type="text"
-//         placeholder="Enter email..."
-//         className="emailInput"
-//         value={email}
-//         onChange={onEmailChange}
-//       ></input>
-//       <h2 className="passwordText">Password:</h2>
-//       <input
-//         type="password"
-//         placeholder="Enter Password..."
-//         className="passwordInput"
-//         value={password}
-//         onChange={onPasswordChange}
-//       ></input>
-//       <h2 className="passwordText">Confirm Password:</h2>
-//       <input
-//         type="password"
-//         placeholder="Confirm Password..."
-//         className="passwordInput"
-//         value={confirmPassword}
-//         onChange={onConfirmPasswordChange}
-//       ></input>
-//       <div className="signUpButton">
-//         <Button variant="contained">Sign Up</Button>
-//       </div>
-//       <div className="googleSignUp">
-//         <Button variant="contained">Sign Up With Google</Button>
-//       </div>
-//     </div>
-//   </div>
-// );
-// }
-
-// export default SignUp;
