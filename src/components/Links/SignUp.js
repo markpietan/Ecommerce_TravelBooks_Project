@@ -38,6 +38,7 @@ export default function Registration() {
           value={user.email}
           onChange={handleChange}
           fullWidth
+          name= "email"
         ></TextField>
         <TextField
           label="Password"
@@ -52,6 +53,7 @@ export default function Registration() {
           onChange={handleChange}
           type="password"
           fullWidth
+          name= "password"
         ></TextField>
         <TextField
           label="Confirm Password"
@@ -66,6 +68,7 @@ export default function Registration() {
           onChange={handleChange}
           type="password"
           fullWidth
+          name= "password_confirmation"
         ></TextField>
         <Button
           type="submit"
