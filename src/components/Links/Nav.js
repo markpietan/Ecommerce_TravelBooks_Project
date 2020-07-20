@@ -17,7 +17,7 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import Badge from "@material-ui/core/Badge";
 import Hidden from "@material-ui/core/Hidden";
 
-function Nav({ cart, onLogoutClick }) {
+function Nav({ cart, onLogoutClick, currentUser }) {
   const [value, setValue] = useState("1");
   // let itemsInCart = 0;
   const [itemsInCart, setItemsInCart] = useState(0);
@@ -72,22 +72,43 @@ function Nav({ cart, onLogoutClick }) {
                 component={NavLink}
                 to="/cart"
               />
+              {currentUser === null ? (
+                <Tab
+                  label="Sign-up"
+                  value="4"
+                  icon={<PersonAddIcon></PersonAddIcon>}
+                  component={NavLink}
+                  to="/signup"
+                />
+              ) : (
+                <Tab
+                  label="Sign-up"
+                  value="4"
+                  icon={<PersonAddIcon></PersonAddIcon>}
+                  component={NavLink}
+                  to="/signup"
+                  disabled
+                />
+              )}
 
-              <Tab
-                label="Sign-up"
-                value="4"
-                icon={<PersonAddIcon></PersonAddIcon>}
-                component={NavLink}
-                to="/signup"
-              />
-
-              <Tab
-                label="Log-in"
-                value="5"
-                icon={<AccountBoxIcon></AccountBoxIcon>}
-                component={NavLink}
-                to="/login"
-              />
+              {currentUser === null ? (
+                <Tab
+                  label="Log-in"
+                  value="5"
+                  icon={<AccountBoxIcon></AccountBoxIcon>}
+                  component={NavLink}
+                  to="/login"
+                />
+              ) : (
+                <Tab
+                  label="Log-in"
+                  value="5"
+                  icon={<AccountBoxIcon></AccountBoxIcon>}
+                  component={NavLink}
+                  to="/login"
+                  disabled
+                />
+              )}
             </TabList>
           </Hidden>
           <Hidden only="xs">
@@ -124,22 +145,40 @@ function Nav({ cart, onLogoutClick }) {
                 component={NavLink}
                 to="/cart"
               />
-
-              <Tab
-                label="Sign-up"
-                value="4"
-                icon={<PersonAddIcon></PersonAddIcon>}
-                component={NavLink}
-                to="/signup"
-              />
-
-              <Tab
-                label="Log-in"
-                value="5"
-                icon={<AccountBoxIcon></AccountBoxIcon>}
-                component={NavLink}
-                to="/login"
-              />
+              {currentUser === null ? (
+                <Tab
+                  label="Sign-up"
+                  value="4"
+                  icon={<PersonAddIcon></PersonAddIcon>}
+                  component={NavLink}
+                  to="/signup"
+                />
+              ) : (
+                <Tab
+                  label="Sign-up"
+                  value="4"
+                  icon={<PersonAddIcon></PersonAddIcon>}
+                  component={NavLink}
+                  to="/signup"
+                  disabled
+                />
+              )}
+              {currentUser === null ? (
+                <Tab
+                  label="Log-in"
+                  value="5"
+                  icon={<AccountBoxIcon></AccountBoxIcon>}
+                  component={NavLink}
+                  to="/login"
+                />
+              ) : (
+                <Tab
+                  label="Log-out"
+                  value="5"
+                  icon={<AccountBoxIcon></AccountBoxIcon>}
+                  onClick= {onLogoutClick}
+                />
+              )}
             </TabList>
           </Hidden>
         </AppBar>
