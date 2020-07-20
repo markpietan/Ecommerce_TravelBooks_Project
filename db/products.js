@@ -7,17 +7,18 @@ async function createProduct({
   imageurl,
   name,
   details,
+  shorthand,
 }) {
   console.log(category, quantity, price, imageurl, name, details);
 
   try {
     const response = await client.query(
       `
-      INSERT INTO products(category, quantity, price, imageurl, name, details)
-      VALUES($1, $2, $3, $4, $5, $6)
+      INSERT INTO products(category, quantity, price, imageurl, name, details, shorthand)
+      VALUES($1, $2, $3, $4, $5, $6, $7)
       ON CONFLICT DO NOTHING RETURNING *;
       `,
-      [category, quantity, price, imageurl, name, details]
+      [category, quantity, price, imageurl, name, details, shorthand]
     );
     console.log(response.rows);
     return response.rows;

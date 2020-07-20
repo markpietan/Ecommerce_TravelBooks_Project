@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Modal from "react-modal";
 import "./Item.css";
 import {
   Button,
@@ -13,19 +13,63 @@ import {
   Typography,
 } from "@material-ui/core";
 
+Modal.setAppElement("#root");
+
 export default function Item({ item, addToCart }) {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const [number, setNumber] = useState(1);
   const incrementClickCount = () => {
     setNumber(number + 1);
   };
   const deccrementClickCount = () => {
-    setNumber(number - 1);
+    if (number > 1) {
+      setNumber(number - 1);
+    } else {
+      setNumber(number);
+    }
   };
 
   return (
-    <Grid item className="grid-item" xs= {6} sm= {4} md= {3}>
+    <Grid item className="grid-item" xs={6} sm={4} md={3}>
+      <Modal
+        isOpen={open}
+        shouldCloseOnOverlayClick={true}
+        onRequestClose={() => setOpen(false)}
+      >
+        <Typography gutterBottom variant="h3" component="h2">
+          {item.name}
+        </Typography>
+        <Typography>{item.category}</Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {item.details}
+        </Typography>
+        <Typography>${item.price}</Typography>
+        <Typography>Qty: {number}</Typography>
+
+        <CardActions>
+          <Button
+            onClick={() => {
+              addToCart(item, number);
+              handleClose();
+            }}
+          >
+            Add to Cart
+          </Button>
+
+          <Button onClick={handleClose}>Close</Button>
+        </CardActions>
+      </Modal>
       <Card>
-        <CardActionArea>
+        <CardActionArea onClick={handleOpen}>
           <CardMedia
             image={item.imageurl}
             component="img"
@@ -40,9 +84,9 @@ export default function Item({ item, addToCart }) {
             <Typography>{item.category}</Typography>
             <Typography>${item.price}</Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {item.details}
+              {item.shorthand}
             </Typography>
-            <Typography>{number}</Typography>
+            <Typography>Qty: {number}</Typography>
           </CardContent>
         </CardActionArea>
         <CardActions>
@@ -52,30 +96,15 @@ export default function Item({ item, addToCart }) {
           <Button size="small" color="primary" onClick={deccrementClickCount}>
             -
           </Button>
-          <Button onClick= {() => {addToCart(item, number)}}>
+          <Button
+            onClick={() => {
+              addToCart(item, number);
+            }}
+          >
             Add to Cart
           </Button>
         </CardActions>
       </Card>
     </Grid>
-    // <div className="testProduct">
-    //   <div className="importantText">
-    //     <h4>{item.name}</h4>
-    //     <img src={item.imageurl}></img>
-    //     <h4>{item.price}</h4>
-    //   </div>
-    //   <div className="add_remove">
-    //     <Button className="minus" onClick={deccrementClickCount}>
-    //       -
-    //     </Button>
-    //     <h4 className="quantity"> {number} </h4>
-    //     <Button className="plus" onClick={incrementClickCount}>
-    //       +
-    //     </Button>
-    //   </div>
-    //   <div className="addToCart">
-    //     <Button className="addToButton" onClick= {() => {addToCart(item, number)}}>Add To Cart</Button>
-    //   </div>
-    // </div>
   );
 }

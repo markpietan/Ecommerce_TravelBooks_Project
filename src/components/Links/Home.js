@@ -20,10 +20,7 @@ function Home({ addToCart }) {
     <Container>
       <Grid container spacing={4}>
         {items.map(function (item) {
-          return (
-            <Item item={item} addToCart={addToCart} key= {item.id}></Item>
-  
-          );
+          return <Item item={item} addToCart={addToCart} key={item.id}></Item>;
         })}
       </Grid>
     </Container>
