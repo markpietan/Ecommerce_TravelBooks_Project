@@ -35,7 +35,8 @@ async function buildTables() {
     CREATE TABLE users(
     id SERIAL PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    admin BOOLEAN
     );
     CREATE TABLE products(
     id SERIAL PRIMARY KEY,
@@ -162,6 +163,18 @@ async function populateInitialData() {
     });
     await createProduct({
       _id: "5",
+      name: "Dominican Republic",
+      category: "Carribean",
+      imageurl:
+        "https://images-na.ssl-images-amazon.com/images/I/71oOKnzbpbL.jpg",
+      price: 100,
+      quantity: 5,
+      shorthand: "Dominican Republic is the shit.",
+      details:
+        "Platanos con salami! Platanos con salami! Platanos con salami! Platanos con salami!",
+    });
+    await createProduct({
+      _id: "6",
       name: "England",
       category: "Europe",
       imageurl:
@@ -174,7 +187,7 @@ async function populateInitialData() {
         "England is the largest part of the island of Great Britain, and it is also the largest constituent country of the United Kingdom. Scotland and Wales are also part of Great Britain (and the UK), Scotland to the north and Wales to the west. To the east and south, and part of the west, England is bordered by sea.",
     });
     await createProduct({
-      _id: "6",
+      _id: "7",
       name: "Finland",
       category: "Europe",
       imageurl:
@@ -187,7 +200,7 @@ async function populateInitialData() {
         "Finland, country located in northern Europe. Finland is one of the world's most northern and geographically remote countries and is subject to a severe climate. Nearly two-thirds of Finland is blanketed by thick woodlands, making it the most densely forested country in Europe.",
     });
     await createProduct({
-      _id: "7",
+      _id: "8",
       name: "France",
       category: "Europe",
       imageurl:
@@ -200,7 +213,7 @@ async function populateInitialData() {
         "France is one of Europe's largest countries. It is bordered by six countries other nations: Germany, Belgium and Luxembourg to the northeast, Switzerland and Italy to the southeast and Spain to the southwest. The United Kingdom borders France via the English Channel.",
     });
     await createProduct({
-      _id: "8",
+      _id: "9",
       name: "Germany",
       category: "Europe",
       imageurl:
@@ -212,7 +225,7 @@ async function populateInitialData() {
         "Germany is a country located in the heart of Western Europe. It is bordered by Denmark, Poland, Czechia, Austria, Switzerland, France, Luxembourg, Belgium, Netherlands, the North Sea, and the Baltic Sea. Germany has a strategic location on the North European Plain and along the entrance to the Baltic Sea.",
     });
     await createProduct({
-      _id: "9",
+      _id: "10",
       name: "Honduras",
       category: "Central America",
       imageurl:
@@ -226,7 +239,7 @@ async function populateInitialData() {
     });
 
     await createProduct({
-      _id: "10",
+      _id: "11",
       name: "India",
       category: "South East Asia",
       imageurl:
@@ -240,7 +253,7 @@ async function populateInitialData() {
         "India is a peninsula, bound by the Indian Ocean in the south, the Arabian Sea on the west and Bay of Bengal in the east. The coastline of India is of about 7,517 km (4,671 mi) long. India has the third largest military force in the world and is also a nuclear weapon state.",
     });
     await createProduct({
-      _id: "11",
+      _id: "12",
       name: "Ireland",
       category: "Europe",
       imageurl:
@@ -254,7 +267,7 @@ async function populateInitialData() {
         "It is the continent's second largest island (after Great Britain). The Republic of Ireland occupies 80 percent of this landmass, while a large chunk of land in the north is part of the United Kingdom.  Ireland is known for its wide expanses of lush, green fields. In fact, its nickname is the Emerald Isle.",
     });
     await createProduct({
-      _id: "12",
+      _id: "13",
       name: "Lybia",
       category: "Africa",
       imageurl: "https://s1.dmcdn.net/v/3G6WO1H4R6ZttHqq_/x480",
@@ -267,7 +280,7 @@ async function populateInitialData() {
         "Libya, country located in North Africa. Most of the country lies in the Sahara desert, and much of its population is concentrated along the coast and its immediate hinterland, where Tripoli (Ṭarābulus), the de facto capital, and Banghāzī (Benghazi), another major city, are located.",
     });
     await createProduct({
-      _id: "13",
+      _id: "14",
       name: "Morocco",
       category: "North Africa",
       imageurl:
@@ -281,7 +294,7 @@ async function populateInitialData() {
         "Morocco is a Northern African country, bordering the North Atlantci Ocean and the Mediterranean Sea, between Algeria and the annexed Western Sahara. It is one of only three nations (along with Spain and France) to have both Atlantci and Mediterranean coastlines. A large part of Morocco is mountainous.",
     });
     await createProduct({
-      _id: "14",
+      _id: "15",
       name: "New Zealand",
       category: "Pacific-Oceania",
       imageurl:
@@ -295,7 +308,7 @@ async function populateInitialData() {
         "A small island nation of just over 4.5 million people, New Zealand is made up of two major land masses (North Island and South Island) and a number of smaller islands including Stewart Island located in the southwestern Pacific Ocean.",
     });
     await createProduct({
-      _id: "15",
+      _id: "16",
       name: "Russia",
       category: "Eurasia",
       imageurl:

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
-import { Grid, Container } from "@material-ui/core";
+import { Grid, Container, Typography } from "@material-ui/core";
 import Item from "./Item.js";
 import { getAllProducts } from "../../api/products";
+import { SearchBar } from "./";
 function Home({ addToCart }) {
   const [items, setItems] = useState([]);
 
@@ -18,6 +19,18 @@ function Home({ addToCart }) {
 
   return (
     <Container>
+      <div className="home">
+        <Typography
+          className="heading"
+          component="h2"
+          variant="h2"
+          align="center"
+        >
+          Home
+        </Typography>
+      </div>
+
+      <SearchBar />
       <Grid container spacing={4}>
         {items.map(function (item) {
           return <Item item={item} addToCart={addToCart} key={item.id}></Item>;

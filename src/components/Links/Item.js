@@ -68,6 +68,7 @@ export default function Item({ item, addToCart }) {
           <Button onClick={handleClose}>Close</Button>
         </CardActions>
       </Modal>
+
       <Card>
         <CardActionArea onClick={handleOpen}>
           <CardMedia
