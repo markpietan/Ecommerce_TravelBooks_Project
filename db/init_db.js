@@ -143,7 +143,7 @@ async function populateInitialData() {
       price: 25.0,
       quantity: 5,
       shorthand:
-        "It is the fifth largest country in Latin America and home to the world's second largest population of Spanish-speaking people.",
+        "It is the fifth largest country in Latin America and home to the world's second...",
       details:
         "It is the fifth largest country in Latin America and home to the world's second largest population of Spanish-speaking people. Colombia is a land of extremes. Through its center run the towering, snow-covered volcanoes and mountains of the Andes. Tropical beaches line the north and west.",
     });

@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 
 import { Nav, Home, Cart, Login, SignUp } from "./Links";
 
+import { registerUser } from "./../api/users";
+
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   useHistory,
+  withRouter,
 } from "react-router-dom";
 
 import { logIn } from "../api/index";
@@ -18,9 +21,34 @@ import { getToken, logOut, setUser } from "./../api/auth";
 
 import "./main.css";
 const App = () => {
+  const successfulLogIn = {
+    severity: "success",
+    message: "Successfully Logged-in",
+    title: "Success!",
+    visible: true,
+  };
+  const successfulSignUp = {
+    severity: "success",
+    message: "Successfully Signed-up",
+    title: "Success!",
+    visible: true,
+  };
+  const failedLogIn = {
+    severity: "error",
+    message: "Log-in failed",
+    title: "Failed!",
+    visible: true,
+  };
+  const failedSignUp = {
+    severity: "error",
+    message: "Sign-up failed",
+    title: "Failed!",
+    visible: true,
+  };
   const history = useHistory();
   const [currentUser, setcurrentUser] = useState(null);
-  const [loginAlert, setloginAlert] = useState(true);
+  const [genericMessage, setgenericMessage] = useState({});
+
   const [cart, setCart] = useState([]);
   useEffect(function () {
     const token = getToken();
@@ -54,11 +82,23 @@ const App = () => {
     console.log(data);
     console.log(history);
     if (data.success === true) {
+      setgenericMessage(successfulLogIn)
+      history.push("/home");
       setcurrentUser({ id: data.id, token: data.token });
       setUser({ id: data.id, token: data.token });
-      // history.push("/home")
     } else {
+      setgenericMessage(failedLogIn)
     }
+  }
+
+  async function onRegisterClick(email, password){
+   const data = await registerUser(email, password)
+   if (data.success) {
+     setgenericMessage(successfulSignUp)
+   } else {
+     setgenericMessage(failedSignUp)
+   }
+
   }
 
   function removeFromCart(item) {
@@ -85,10 +125,7 @@ const App = () => {
     logOut();
   }
 
-  function onModalExit() {
-    setloginAlert(false);
-    console.log("hello");
-  }
+
   return (
     <>
       {/* <Fade in={loginAlert}  onExiting= {onModalExit}>
@@ -103,37 +140,45 @@ const App = () => {
           Unsuccessfully logged-in
         </Alert>
       </Fade> */}
-      <Router>
-        <div className="App">
-          <Nav
-            cart={cart}
-            currentUser={currentUser}
-            onLogoutClick={onLogOutClick}
-          />
-          <Switch>
-            <Route path="/home">
-              <Home addToCart={addToCart}></Home>
-            </Route>
-            <Route path="/cart">
-              <Cart
-                cart={cart}
-                removeFromCart={removeFromCart}
-                addToCart={addToCart}
-              ></Cart>
-            </Route>
-            <Route path="/login">
-              {currentUser === null ? (
-                <Login onLogInClick={onLogInClick}></Login>
-              ) : null}
-            </Route>
-            <Route path="/signup">
-              <SignUp></SignUp>
-            </Route>
-          </Switch>
-        </div>
-      </Router>
+
+      <div className="App">
+        <Nav
+          cart={cart}
+          currentUser={currentUser}
+          onLogoutClick={onLogOutClick}
+        />
+        <Fade in={genericMessage.visible}>
+          <Alert onClose={() => {setgenericMessage({...genericMessage, visible: false })}} severity={genericMessage.severity}>
+            <AlertTitle>{genericMessage.title}</AlertTitle>
+            {genericMessage.message}
+          </Alert>
+        </Fade>
+        <Switch>
+          <Route path="/home">
+            <Home addToCart={addToCart}></Home>
+          </Route>
+          <Route path="/cart">
+            <Cart
+              cart={cart}
+              removeFromCart={removeFromCart}
+              addToCart={addToCart}
+            ></Cart>
+          </Route>
+          <Route path="/login">
+            {currentUser === null ? (
+              <Login onLogInClick={onLogInClick}></Login>
+            ) : null}
+          </Route>
+          <Route path="/signup">
+            <SignUp onRegisterClick= {onRegisterClick}></SignUp>
+          </Route>
+          <Route path= "/" exact>
+          <img src= "https://whenonearth.net/wp-content/uploads/Travel-Books-To-Spark-your-Wanderlust.jpg"></img>
+          </Route>
+        </Switch>
+      </div>
     </>
   );
 };
 
-export default App;
+export default withRouter(App);

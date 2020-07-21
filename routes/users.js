@@ -19,7 +19,7 @@ usersRouter.post("/register", (req, res, next) => {
   const SALT_COUNT = 10;
   console.log(email, password);
   if (password.length < 8) {
-    res.send({ message: "password must be 8 characters" });
+    res.send({ message: "password must be 8 characters", success: false});
   }
   bcrypt.hash(password, SALT_COUNT, async function (err, hashedPassword) {
     console.log(hashedPassword);
@@ -32,10 +32,11 @@ usersRouter.post("/register", (req, res, next) => {
         res.send({
           name: "UserExistsError",
           message: "A user by that username already exists",
+          success: false
         });
       }
 
-      res.send({ rows });
+      res.send({ rows, success: true });
     } catch (error) {
       console.log(error);
       throw error;

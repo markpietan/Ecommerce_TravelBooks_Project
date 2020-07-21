@@ -18,7 +18,7 @@ function Home({ addToCart }) {
 
   return (
     <Container>
-      <Grid container spacing={4}>
+      <Grid container spacing={8} alignContent="center" alignItems= "center">
         {items.map(function (item) {
           return <Item item={item} addToCart={addToCart} key={item.id}></Item>;
         })}
