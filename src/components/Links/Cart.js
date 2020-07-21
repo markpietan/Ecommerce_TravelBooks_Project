@@ -41,8 +41,13 @@ function Cart({ cart, removeFromCart, addToCart }) {
   };
   const rootStyle = { display: "flex", placeItems: "center" };
   return (
-    <Container className="root" classes={{root: "root"}}>
-      <Typography component="h2" variant="h2" align="center" className= "heading">
+    <Container className="root" classes={{ root: "root" }}>
+      <Typography
+        component="h2"
+        variant="h2"
+        align="center"
+        className="heading"
+      >
         Cart
       </Typography>
       {cart.map(function (item) {
@@ -97,19 +102,18 @@ function Cart({ cart, removeFromCart, addToCart }) {
         );
       })}
       <br></br>
-      {/* <StripeCheckout
+      <StripeCheckout
         stripeKey="pk_test_518heLIHvs9PrrMbVm46vQX5P5oQ17M7GTeJlBElSccp6l6f4oGDhH7Mh6MfCZvjMDdFbxztQNoxrU04s8r3zqpN400xN34EUej"
         token={makePayment}
         name="Travel Books"
         amount={product.price * 100}
         shippingAddress
         billingAddress
-        
-      > */}
+      >
         <Button className="paymentButton" variant="contained">
           Pay With Card
         </Button>
-      {/* </StripeCheckout> */}
+      </StripeCheckout>
     </Container>
 
     // <div className="cartPage">
