@@ -6,7 +6,7 @@ const LandingPage = () => {
   return (
     <Container maxWidth={false} disableGutters={true} className="rootLandingPage">
       <div className="overlay">
-        <Typography as = "h1" variant= "h1" className= "title">Wander Travel Books</Typography>
+        <Typography as = "h1" variant= "h1" className= "title"></Typography>
       </div>
 
       <img
