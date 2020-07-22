@@ -34,6 +34,21 @@ function Nav({ cart, onLogoutClick, currentUser }) {
     },
     [cart]
   );
+
+  useEffect(function () {
+    if (window.location.pathname === "/") {
+      setValue("1");
+    } else if (window.location.pathname === "/home") {
+      setValue("2");
+    } else if (window.location.pathname === "/cart") {
+      setValue("3");
+    } else if (window.location.pathname === "/signup") {
+      setValue("4");
+    } else if (window.location.pathname === "/login") {
+      setValue("5");
+    }
+  }, [currentUser]);
+
   return (
     <div>
       <TabContext value={value}>
@@ -176,7 +191,7 @@ function Nav({ cart, onLogoutClick, currentUser }) {
                   label="Log-out"
                   value="5"
                   icon={<AccountBoxIcon></AccountBoxIcon>}
-                  onClick= {onLogoutClick}
+                  onClick={onLogoutClick}
                 />
               )}
             </TabList>
