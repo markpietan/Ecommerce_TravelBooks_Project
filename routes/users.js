@@ -13,6 +13,12 @@ const {
   getUserByEmail,
 } = require("./../db/users");
 
+usersRouter.get("/getUserInfo", (req, res, next) => {
+  if (req.user) {
+    res.send({ user: req.user });
+  }
+});
+
 usersRouter.post("/register", (req, res, next) => {
   const { email, password } = req.body;
   console.log("registering", email, password);

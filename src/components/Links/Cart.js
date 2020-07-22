@@ -41,8 +41,13 @@ function Cart({ cart, removeFromCart, addToCart }) {
   };
   const rootStyle = { display: "flex", placeItems: "center" };
   return (
-    <Container className="root" classes={{root: "root"}}>
-      <Typography component="h2" variant="h2" align="center" className= "heading">
+    <Container className="root" classes={{ root: "root" }}>
+      <Typography
+        component="h2"
+        variant="h2"
+        align="center"
+        className="heading"
+      >
         Cart
       </Typography>
       {cart.map(function (item) {

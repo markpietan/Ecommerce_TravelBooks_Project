@@ -9,8 +9,10 @@
   align-items: center;
 }
 
-.grid-item{
-width: 25%;
+.grid-item {
+  width: 25%;
+}
 
-height: 100%
+.home {
+  margin-top: 20px;
 }
