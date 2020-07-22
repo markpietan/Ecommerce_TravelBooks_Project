@@ -7,10 +7,11 @@ import {
   ButtonBase,
   Typography,
   Container,
+  Tooltip
 } from "@material-ui/core";
 import StripeCheckout from "react-stripe-checkout";
 
-function Cart({ cart, removeFromCart, addToCart }) {
+function Cart({ cart, removeFromCart, addToCart, user }) {
   const [product, setProduct] = useState({
     name: "Travel Books",
     price: 10,
@@ -102,21 +103,29 @@ function Cart({ cart, removeFromCart, addToCart }) {
         );
       })}
       <br></br>
-      <StripeCheckout
-        stripeKey="pk_test_518heLIHvs9PrrMbVm46vQX5P5oQ17M7GTeJlBElSccp6l6f4oGDhH7Mh6MfCZvjMDdFbxztQNoxrU04s8r3zqpN400xN34EUej"
-        token={makePayment}
-        name="Travel Books"
-        amount={product.price * 100}
-        shippingAddress
-        billingAddress
-        
-      >
-        <Button className="paymentButton" variant="contained">
+      {user === null ? (
+        <Tooltip title= "Log in to check out">
+          <span>
+        <Button className="paymentButton" variant="contained" disabled>
           Pay With Card
         </Button>
-      </StripeCheckout>
+        </span>
+        </Tooltip>
+      ) : (
+        <StripeCheckout
+          stripeKey="pk_test_518heLIHvs9PrrMbVm46vQX5P5oQ17M7GTeJlBElSccp6l6f4oGDhH7Mh6MfCZvjMDdFbxztQNoxrU04s8r3zqpN400xN34EUej"
+          token={makePayment}
+          name="Travel Books"
+          amount={product.price * 100}
+          shippingAddress
+          billingAddress
+        >
+          <Button className="paymentButton" variant="contained">
+            Pay With Card
+          </Button>
+        </StripeCheckout>
+      )}
     </Container>
-
   );
 }
 
