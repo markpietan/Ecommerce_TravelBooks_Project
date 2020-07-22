@@ -4,6 +4,8 @@ import { Nav, Home, Cart, Login, SignUp, Admin } from "./Links";
 
 import { registerUser, getUserInfo } from "./../api/users";
 
+import { clearCart, getcart, storeCart} from "./../api/cart";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,7 +15,7 @@ import {
 } from "react-router-dom";
 
 import { logIn } from "../api/index";
-
+import LandingPage from "./LandingPage"
 import { Button, Container, Fade } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
@@ -63,6 +65,7 @@ const App = () => {
     console.log(token);
     if (token) {
       setcurrentUser(token);
+      setCart(getcart())
     }
   }, []);
 
@@ -82,6 +85,7 @@ const App = () => {
     }
 
     setCart(cartCopy);
+    storeCart(cartCopy)
   }
 
   async function onLogInClick(email, password) {
@@ -128,11 +132,15 @@ const App = () => {
     }
 
     setCart(cartCopy);
+    storeCart(cartCopy)
   }
 
   function onLogOutClick() {
     setcurrentUser({});
     logOut();
+    clearCart()
+    setCart([])
+    history.push("/home")
   }
 
   return (
@@ -176,6 +184,7 @@ const App = () => {
               cart={cart}
               removeFromCart={removeFromCart}
               addToCart={addToCart}
+              user= {currentUser}
             ></Cart>
           </Route>
           <Route path="/login">
@@ -186,8 +195,13 @@ const App = () => {
           <Route path="/signup">
             <SignUp onRegisterClick={onRegisterClick}></SignUp>
           </Route>
+<<<<<<< HEAD
           <Route path="/" exact>
             <img src="https://whenonearth.net/wp-content/uploads/Travel-Books-To-Spark-your-Wanderlust.jpg"></img>
+=======
+          <Route path= "/" exact>
+           <LandingPage></LandingPage>
+>>>>>>> 21018cec6bb70fcdc905c9ce220ad2c376929ead
           </Route>
           {currentUser.admin && (
             <Route path="/admin">
