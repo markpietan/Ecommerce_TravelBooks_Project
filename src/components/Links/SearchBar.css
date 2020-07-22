@@ -1,0 +1,19 @@
+.toolbar {
+  background-color: #3f51b5;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgb(163, 162, 162);
+}
+
+#searchbar {
+  /* background-color: #3f51b5; */
+
+  display: flex;
+  justify-content: center;
+  color: white;
+}
+
+.searchIcon {
+  color: white;
+}

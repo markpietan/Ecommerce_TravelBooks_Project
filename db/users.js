@@ -1,6 +1,6 @@
 const { client } = require("./index");
 // await client.connect()
-const {createOrder} = require("./order")
+const { createOrder } = require("./order");
 async function registerUser({ email, password }) {
   try {
     const response = await client.query(
@@ -10,6 +10,23 @@ async function registerUser({ email, password }) {
     ON CONFLICT DO NOTHING RETURNING *;
     `,
       [email, password]
+    );
+    console.log(response.rows);
+    return response.rows;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function registerAdmin({ email, password }) {
+  try {
+    const response = await client.query(
+      `
+    INSERT INTO users(email, password, admin)
+    VALUES($1, $2, $3)
+    ON CONFLICT DO NOTHING RETURNING *;
+    `,
+      [email, password, true]
     );
     console.log(response.rows);
     return response.rows;
@@ -100,8 +117,12 @@ async function createOrderFromCart({ id }) {
     console.log(order);
     // const deletedCart = await deleteCart({ id: userid });
     // console.log(deletedCart);
-    
-    const orderDetailes = await addProductsToOrder({userid: id, orderid: order.id, cart})
+
+    const orderDetailes = await addProductsToOrder({
+      userid: id,
+      orderid: order.id,
+      cart,
+    });
     return { Message: "Successfully created order", Success: true };
     // return response.rows;
   } catch (error) {
@@ -109,41 +130,46 @@ async function createOrderFromCart({ id }) {
   }
 }
 
-async function addProductsToOrder({userid, orderid, cart = []}){
-try {
-  for (let index = 0; index < cart.length; index++) {
-    const product = cart[index];
-    const [response] = await addProductToOrder({userid, orderid, productid: product.id, amount: product.amount})
-    console.log(response)
+async function addProductsToOrder({ userid, orderid, cart = [] }) {
+  try {
+    for (let index = 0; index < cart.length; index++) {
+      const product = cart[index];
+      const [response] = await addProductToOrder({
+        userid,
+        orderid,
+        productid: product.id,
+        amount: product.amount,
+      });
+      console.log(response);
+    }
+    return undefined;
+  } catch (error) {
+    throw error;
   }
-  return undefined
-} catch (error) {
-  throw error
-}
-
 }
 // INSERT INTO userorders("userid", "productid", "orderid", amount)
 //     VALUES(182, 67, 179, 1000)
 //     ON CONFLICT ("productid", "userid", "orderid") DO UPDATE SET amount = 2000 + userorders.amount
 //     RETURNING *;
-async function addProductToOrder({userid, orderid, productid, amount}){
-try {
-  console.log(userid, productid, orderid, amount)
-  const response = await client.query(`
+async function addProductToOrder({ userid, orderid, productid, amount }) {
+  try {
+    console.log(userid, productid, orderid, amount);
+    const response = await client.query(
+      `
     INSERT INTO userorders("userid", "productid", "orderid", amount)
     VALUES($1, $2, $3, $4)
     ON CONFLICT ("productid", "userid", "orderid") DO UPDATE SET amount = ${amount} + userorders.amount
     RETURNING *;
     
-  `, [userid, productid, orderid, amount])
-  console.log(response.rows)
-  return response.rows
-} catch (error) {
-  throw error
+  `,
+      [userid, productid, orderid, amount]
+    );
+    console.log(response.rows);
+    return response.rows;
+  } catch (error) {
+    throw error;
+  }
 }
-
-}
-
 
 async function getUserCart({ id }) {
   try {
@@ -210,5 +236,6 @@ module.exports = {
   createOrderFromCart,
   addToCart,
   addProductToOrder,
-  addProductsToOrder
+  addProductsToOrder,
+  registerAdmin,
 };
