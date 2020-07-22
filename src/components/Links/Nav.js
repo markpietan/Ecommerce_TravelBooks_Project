@@ -35,19 +35,24 @@ function Nav({ cart, onLogoutClick, currentUser }) {
     [cart]
   );
 
-  useEffect(function () {
-    if (window.location.pathname === "/") {
-      setValue("1");
-    } else if (window.location.pathname === "/home") {
-      setValue("2");
-    } else if (window.location.pathname === "/cart") {
-      setValue("3");
-    } else if (window.location.pathname === "/signup") {
-      setValue("4");
-    } else if (window.location.pathname === "/login") {
-      setValue("5");
-    }
-  }, [currentUser]);
+  useEffect(
+    function () {
+      if (window.location.pathname === "/") {
+        setValue("1");
+      } else if (window.location.pathname === "/home") {
+        setValue("2");
+      } else if (window.location.pathname === "/cart") {
+        setValue("3");
+      } else if (window.location.pathname === "/signup") {
+        setValue("4");
+      } else if (window.location.pathname === "/login") {
+        setValue("5");
+      } else if (window.location.pathname === "/admin") {
+        setValue("6");
+      }
+    },
+    [currentUser]
+  );
 
   return (
     <div>
@@ -87,7 +92,7 @@ function Nav({ cart, onLogoutClick, currentUser }) {
                 component={NavLink}
                 to="/cart"
               />
-              {currentUser === null ? (
+              {!currentUser.id ? (
                 <Tab
                   label="Sign-up"
                   value="4"
@@ -106,7 +111,7 @@ function Nav({ cart, onLogoutClick, currentUser }) {
                 />
               )}
 
-              {currentUser === null ? (
+              {!currentUser.id ? (
                 <Tab
                   label="Log-in"
                   value="5"
@@ -160,7 +165,7 @@ function Nav({ cart, onLogoutClick, currentUser }) {
                 component={NavLink}
                 to="/cart"
               />
-              {currentUser === null ? (
+              {!currentUser.id ? (
                 <Tab
                   label="Sign-up"
                   value="4"
@@ -170,15 +175,14 @@ function Nav({ cart, onLogoutClick, currentUser }) {
                 />
               ) : (
                 <Tab
-                  label="Sign-up"
+                  label={currentUser.admin ? "Admin" : "Profile"}
+                  to={currentUser.admin ? "/admin" : "/Profile"}
                   value="4"
-                  icon={<PersonAddIcon></PersonAddIcon>}
+                  icon={<AccountBoxIcon></AccountBoxIcon>}
                   component={NavLink}
-                  to="/signup"
-                  disabled
                 />
               )}
-              {currentUser === null ? (
+              {!currentUser.id ? (
                 <Tab
                   label="Log-in"
                   value="5"

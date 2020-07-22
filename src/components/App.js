@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { Nav, Home, Cart, Login, SignUp } from "./Links";
+import { Nav, Home, Cart, Login, SignUp, Admin } from "./Links";
 
-import { registerUser } from "./../api/users";
+import { registerUser, getUserInfo } from "./../api/users";
 
 import {
   BrowserRouter as Router,
@@ -46,8 +46,16 @@ const App = () => {
     visible: true,
   };
   const history = useHistory();
-  const [currentUser, setcurrentUser] = useState(null);
+  const [currentUser, setcurrentUser] = useState({});
   const [genericMessage, setgenericMessage] = useState({});
+
+  // useEffect(() => {
+  //   async function getAdminInfo() {
+  //     const data = await getUserInfo();
+  //     setcurrentUser(data);
+  //   }
+  //   getAdminInfo();
+  // }, []);
 
   const [cart, setCart] = useState([]);
   useEffect(function () {
@@ -82,23 +90,25 @@ const App = () => {
     console.log(data);
     console.log(history);
     if (data.success === true) {
-      setgenericMessage(successfulLogIn)
+      setgenericMessage(successfulLogIn);
       history.push("/home");
-      setcurrentUser({ id: data.id, token: data.token });
+      setcurrentUser({ id: data.id, token: data.token, admin: data.admin });
       setUser({ id: data.id, token: data.token });
     } else {
-      setgenericMessage(failedLogIn)
+      setgenericMessage(failedLogIn);
     }
   }
 
-  async function onRegisterClick(email, password){
-   const data = await registerUser(email, password)
-   if (data.success) {
-     setgenericMessage(successfulSignUp)
-   } else {
-     setgenericMessage(failedSignUp)
-   }
-
+  async function onRegisterClick(email, password) {
+    const data = await registerUser(email, password);
+    console.log(data);
+    if (data.success) {
+      setgenericMessage(successfulSignUp);
+      setcurrentUser(data.rows[0]);
+      console.log(data);
+    } else {
+      setgenericMessage(failedSignUp);
+    }
   }
 
   function removeFromCart(item) {
@@ -121,10 +131,9 @@ const App = () => {
   }
 
   function onLogOutClick() {
-    setcurrentUser(null);
+    setcurrentUser({});
     logOut();
   }
-
 
   return (
     <>
@@ -148,7 +157,12 @@ const App = () => {
           onLogoutClick={onLogOutClick}
         />
         <Fade in={genericMessage.visible}>
-          <Alert onClose={() => {setgenericMessage({...genericMessage, visible: false })}} severity={genericMessage.severity}>
+          <Alert
+            onClose={() => {
+              setgenericMessage({ ...genericMessage, visible: false });
+            }}
+            severity={genericMessage.severity}
+          >
             <AlertTitle>{genericMessage.title}</AlertTitle>
             {genericMessage.message}
           </Alert>
@@ -165,16 +179,21 @@ const App = () => {
             ></Cart>
           </Route>
           <Route path="/login">
-            {currentUser === null ? (
+            {!currentUser.id ? (
               <Login onLogInClick={onLogInClick}></Login>
             ) : null}
           </Route>
           <Route path="/signup">
-            <SignUp onRegisterClick= {onRegisterClick}></SignUp>
+            <SignUp onRegisterClick={onRegisterClick}></SignUp>
           </Route>
-          <Route path= "/" exact>
-          <img src= "https://whenonearth.net/wp-content/uploads/Travel-Books-To-Spark-your-Wanderlust.jpg"></img>
+          <Route path="/" exact>
+            <img src="https://whenonearth.net/wp-content/uploads/Travel-Books-To-Spark-your-Wanderlust.jpg"></img>
           </Route>
+          {currentUser.admin && (
+            <Route path="/admin">
+              <Admin />
+            </Route>
+          )}
         </Switch>
       </div>
     </>

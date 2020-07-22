@@ -19,7 +19,7 @@ function Home({ addToCart }) {
 
   return (
     <Container>
-          <div className="home">
+      <div className="home">
         <Typography
           className="heading"
           component="h2"
@@ -31,9 +31,7 @@ function Home({ addToCart }) {
       </div>
 
       <SearchBar />
-      <Grid container spacing={8} alignContent="center" alignItems= "center">
-  
-     
+      <Grid container spacing={8} alignContent="center" alignItems="center">
         {items.map(function (item) {
           return <Item item={item} addToCart={addToCart} key={item.id}></Item>;
         })}
