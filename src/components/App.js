@@ -4,6 +4,8 @@ import { Nav, Home, Cart, Login, SignUp } from "./Links";
 
 import { registerUser } from "./../api/users";
 
+import { clearCart, getcart, storeCart} from "./../api/cart";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,7 +15,7 @@ import {
 } from "react-router-dom";
 
 import { logIn } from "../api/index";
-
+import LandingPage from "./LandingPage"
 import { Button, Container, Fade } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
@@ -55,6 +57,7 @@ const App = () => {
     console.log(token);
     if (token) {
       setcurrentUser(token);
+      setCart(getcart())
     }
   }, []);
 
@@ -74,6 +77,7 @@ const App = () => {
     }
 
     setCart(cartCopy);
+    storeCart(cartCopy)
   }
 
   async function onLogInClick(email, password) {
@@ -118,11 +122,15 @@ const App = () => {
     }
 
     setCart(cartCopy);
+    storeCart(cartCopy)
   }
 
   function onLogOutClick() {
     setcurrentUser(null);
     logOut();
+    clearCart()
+    setCart([])
+    history.push("/home")
   }
 
 
@@ -162,6 +170,7 @@ const App = () => {
               cart={cart}
               removeFromCart={removeFromCart}
               addToCart={addToCart}
+              user= {currentUser}
             ></Cart>
           </Route>
           <Route path="/login">
@@ -173,7 +182,7 @@ const App = () => {
             <SignUp onRegisterClick= {onRegisterClick}></SignUp>
           </Route>
           <Route path= "/" exact>
-          <img src= "https://whenonearth.net/wp-content/uploads/Travel-Books-To-Spark-your-Wanderlust.jpg"></img>
+           <LandingPage></LandingPage>
           </Route>
         </Switch>
       </div>
