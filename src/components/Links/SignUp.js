@@ -4,7 +4,7 @@ import "./SignUp.css";
 import { registerUser } from "../../api/users";
 import { Button, Container, TextField, Typography } from "@material-ui/core";
 
-export default function Registration() {
+export default function Registration({onRegisterClick}) {
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -33,7 +33,11 @@ export default function Registration() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    registerUser(user.email, user.password);
+    // registerUser(user.email, user.password);
+    onRegisterClick(user.email, user.password)
+    user.email=""
+    user.password=""
+    user.password_confirmation=""
   }
 
   return (
