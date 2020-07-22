@@ -25,7 +25,7 @@ usersRouter.post("/register", (req, res, next) => {
   const SALT_COUNT = 10;
   console.log(email, password);
   if (password.length < 8) {
-    res.send({ message: "password must be 8 characters", success: false});
+    res.send({ message: "password must be 8 characters", success: false });
   }
   bcrypt.hash(password, SALT_COUNT, async function (err, hashedPassword) {
     console.log(hashedPassword);
@@ -38,11 +38,11 @@ usersRouter.post("/register", (req, res, next) => {
         res.send({
           name: "UserExistsError",
           message: "A user by that username already exists",
-          success: false
+          success: false,
         });
       }
 
-      res.send({ rows, success: true });
+      res.send({ rows, success: true, admin: false });
     } catch (error) {
       console.log(error);
       throw error;
@@ -91,7 +91,7 @@ usersRouter.post("/login", async (req, res, next) => {
       res.send({ message: "user does not exist in database", success: false });
     }
     let hashed = rows[0].password;
-    const { id } = rows[0];
+    const { id, admin } = rows[0];
 
     bcrypt.compare(password, hashed, function (err, passwordsMatch) {
       if (passwordsMatch) {
@@ -99,7 +99,7 @@ usersRouter.post("/login", async (req, res, next) => {
         const token = jwt.sign({ email, id: id }, process.env.JWT_SECRET);
         console.log(token);
         req.user = { email, id: id };
-        res.send({ token, success: true, id });
+        res.send({ token, success: true, id, admin });
       } else {
         throw err;
       }
