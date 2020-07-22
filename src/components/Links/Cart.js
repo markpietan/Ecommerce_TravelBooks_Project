@@ -7,7 +7,7 @@ import {
   ButtonBase,
   Typography,
   Container,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
 import StripeCheckout from "react-stripe-checkout";
 
@@ -103,13 +103,13 @@ function Cart({ cart, removeFromCart, addToCart, user }) {
         );
       })}
       <br></br>
-      {user === null ? (
-        <Tooltip title= "Log in to check out">
+      {!user.id ? (
+        <Tooltip title="Log in to check out">
           <span>
-        <Button className="paymentButton" variant="contained" disabled>
-          Pay With Card
-        </Button>
-        </span>
+            <Button className="paymentButton" variant="contained" disabled>
+              Pay With Card
+            </Button>
+          </span>
         </Tooltip>
       ) : (
         <StripeCheckout

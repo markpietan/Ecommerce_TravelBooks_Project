@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { Nav, Home, Cart, Login, SignUp } from "./Links";
+import { Nav, Home, Cart, Login, SignUp, Admin } from "./Links";
 
-import { registerUser } from "./../api/users";
+import { registerUser, getUserInfo } from "./../api/users";
 
 import { clearCart, getcart, storeCart } from "./../api/cart";
 
@@ -48,8 +48,16 @@ const App = () => {
     visible: true,
   };
   const history = useHistory();
-  const [currentUser, setcurrentUser] = useState(null);
+  const [currentUser, setcurrentUser] = useState({});
   const [genericMessage, setgenericMessage] = useState({});
+
+  // useEffect(() => {
+  //   async function getAdminInfo() {
+  //     const data = await getUserInfo();
+  //     setcurrentUser(data);
+  //   }
+  //   getAdminInfo();
+  // }, []);
 
   const [cart, setCart] = useState([]);
   useEffect(function () {
@@ -88,7 +96,7 @@ const App = () => {
     if (data.success === true) {
       setgenericMessage(successfulLogIn);
       history.push("/home");
-      setcurrentUser({ id: data.id, token: data.token });
+      setcurrentUser({ id: data.id, token: data.token, admin: data.admin });
       setUser({ id: data.id, token: data.token });
     } else {
       setgenericMessage(failedLogIn);
@@ -97,8 +105,11 @@ const App = () => {
 
   async function onRegisterClick(email, password) {
     const data = await registerUser(email, password);
+    console.log(data);
     if (data.success) {
       setgenericMessage(successfulSignUp);
+      setcurrentUser(data.rows[0]);
+      console.log(data);
     } else {
       setgenericMessage(failedSignUp);
     }
@@ -125,7 +136,7 @@ const App = () => {
   }
 
   function onLogOutClick() {
-    setcurrentUser(null);
+    setcurrentUser({});
     logOut();
     clearCart();
     setCart([]);
@@ -177,7 +188,7 @@ const App = () => {
             ></Cart>
           </Route>
           <Route path="/login">
-            {currentUser === null ? (
+            {!currentUser.id ? (
               <Login onLogInClick={onLogInClick}></Login>
             ) : null}
           </Route>
@@ -187,6 +198,11 @@ const App = () => {
           <Route path="/" exact>
             <LandingPage></LandingPage>
           </Route>
+          {currentUser.admin && (
+            <Route path="/admin">
+              <Admin />
+            </Route>
+          )}
         </Switch>
       </div>
     </>
