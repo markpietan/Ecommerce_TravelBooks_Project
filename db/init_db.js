@@ -109,7 +109,17 @@ async function populateInitialData() {
     } else {
       console.log("Email is already in use");
     }
-    // const response = await getUserOrders({ id: 182 });
+    await new Promise((resolve, reject) => {
+      bcrypt.hash("12345678", 10, async function (err, hashedPassword) {
+        await registerAdmin({
+          name: "Andres",
+          email: "andres@me.com",
+          password: hashedPassword,
+        });
+        resolve();
+      });
+    });
+
     await createProduct({
       name: "Australia",
       category: "Pacific-Oceania",
@@ -169,7 +179,7 @@ async function populateInitialData() {
         "https://images-na.ssl-images-amazon.com/images/I/71oOKnzbpbL.jpg",
       price: 100,
       quantity: 5,
-      shorthand: "Dominican Republic is the shit.",
+      shorthand: "Dominican Republic is awesome!",
       details:
         "Platanos con salami! Platanos con salami! Platanos con salami! Platanos con salami!",
     });

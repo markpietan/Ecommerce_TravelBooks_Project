@@ -4,7 +4,7 @@ import { Nav, Home, Cart, Login, SignUp } from "./Links";
 
 import { registerUser } from "./../api/users";
 
-import { clearCart, getcart, storeCart} from "./../api/cart";
+import { clearCart, getcart, storeCart } from "./../api/cart";
 
 import {
   BrowserRouter as Router,
@@ -15,7 +15,7 @@ import {
 } from "react-router-dom";
 
 import { logIn } from "../api/index";
-import LandingPage from "./LandingPage"
+import LandingPage from "./LandingPage";
 import { Button, Container, Fade } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
@@ -54,10 +54,10 @@ const App = () => {
   const [cart, setCart] = useState([]);
   useEffect(function () {
     const token = getToken();
-    console.log(token);
+    // console.log(token);
     if (token) {
       setcurrentUser(token);
-      setCart(getcart())
+      setCart(getcart());
     }
   }, []);
 
@@ -77,7 +77,7 @@ const App = () => {
     }
 
     setCart(cartCopy);
-    storeCart(cartCopy)
+    storeCart(cartCopy);
   }
 
   async function onLogInClick(email, password) {
@@ -86,23 +86,22 @@ const App = () => {
     console.log(data);
     console.log(history);
     if (data.success === true) {
-      setgenericMessage(successfulLogIn)
+      setgenericMessage(successfulLogIn);
       history.push("/home");
       setcurrentUser({ id: data.id, token: data.token });
       setUser({ id: data.id, token: data.token });
     } else {
-      setgenericMessage(failedLogIn)
+      setgenericMessage(failedLogIn);
     }
   }
 
-  async function onRegisterClick(email, password){
-   const data = await registerUser(email, password)
-   if (data.success) {
-     setgenericMessage(successfulSignUp)
-   } else {
-     setgenericMessage(failedSignUp)
-   }
-
+  async function onRegisterClick(email, password) {
+    const data = await registerUser(email, password);
+    if (data.success) {
+      setgenericMessage(successfulSignUp);
+    } else {
+      setgenericMessage(failedSignUp);
+    }
   }
 
   function removeFromCart(item) {
@@ -122,17 +121,16 @@ const App = () => {
     }
 
     setCart(cartCopy);
-    storeCart(cartCopy)
+    storeCart(cartCopy);
   }
 
   function onLogOutClick() {
     setcurrentUser(null);
     logOut();
-    clearCart()
-    setCart([])
-    history.push("/home")
+    clearCart();
+    setCart([]);
+    history.push("/home");
   }
-
 
   return (
     <>
@@ -156,7 +154,12 @@ const App = () => {
           onLogoutClick={onLogOutClick}
         />
         <Fade in={genericMessage.visible}>
-          <Alert onClose={() => {setgenericMessage({...genericMessage, visible: false })}} severity={genericMessage.severity}>
+          <Alert
+            onClose={() => {
+              setgenericMessage({ ...genericMessage, visible: false });
+            }}
+            severity={genericMessage.severity}
+          >
             <AlertTitle>{genericMessage.title}</AlertTitle>
             {genericMessage.message}
           </Alert>
@@ -170,7 +173,7 @@ const App = () => {
               cart={cart}
               removeFromCart={removeFromCart}
               addToCart={addToCart}
-              user= {currentUser}
+              user={currentUser}
             ></Cart>
           </Route>
           <Route path="/login">
@@ -179,10 +182,10 @@ const App = () => {
             ) : null}
           </Route>
           <Route path="/signup">
-            <SignUp onRegisterClick= {onRegisterClick}></SignUp>
+            <SignUp onRegisterClick={onRegisterClick}></SignUp>
           </Route>
-          <Route path= "/" exact>
-           <LandingPage></LandingPage>
+          <Route path="/" exact>
+            <LandingPage></LandingPage>
           </Route>
         </Switch>
       </div>
