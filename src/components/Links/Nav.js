@@ -24,6 +24,7 @@ function Nav({ cart, onLogoutClick, currentUser }) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  console.log("cart", cart);
   useEffect(
     function () {
       let temp = 0;
