@@ -5,12 +5,3 @@ export async function getAllProducts() {
   console.log(data);
   return data.data;
 }
-
-export async function createProduct(item) {
-  try {
-    const { data } = await axios.post("/api/products", item);
-    return data;
-  } catch (error) {
-    throw error;
-  }
-}

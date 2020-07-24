@@ -123,7 +123,7 @@ async function populateInitialData() {
         resolve();
       });
     });
-
+    // const response = await getUserOrders({ id: 182 });
     await createProduct({
       name: "Australia",
       category: "Pacific-Oceania",
@@ -183,7 +183,7 @@ async function populateInitialData() {
         "https://images-na.ssl-images-amazon.com/images/I/71oOKnzbpbL.jpg",
       price: 100,
       quantity: 5,
-      shorthand: "Dominican Republic is awesome!",
+      shorthand: "Dominican Republic is the shit.",
       details:
         "Platanos con salami! Platanos con salami! Platanos con salami! Platanos con salami!",
     });
