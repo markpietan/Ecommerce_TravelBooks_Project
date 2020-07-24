@@ -18,15 +18,15 @@ async function registerUser({ email, password }) {
   }
 }
 
-async function registerAdmin({ name, email, password }) {
+async function registerAdmin({ email, password }) {
   try {
     const response = await client.query(
       `
-    INSERT INTO users(name, email, password, admin)
-    VALUES($1, $2, $3, $4)
+    INSERT INTO users(email, password, admin)
+    VALUES($1, $2, $3)
     ON CONFLICT DO NOTHING RETURNING *;
     `,
-      [name, email, password, true]
+      [email, password, true]
     );
     console.log(response.rows);
     return response.rows;

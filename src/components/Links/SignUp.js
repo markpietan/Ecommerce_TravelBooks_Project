@@ -4,7 +4,7 @@ import "./SignUp.css";
 import { registerUser } from "../../api/users";
 import { Button, Container, TextField, Typography } from "@material-ui/core";
 
-export default function Registration({ onRegisterClick }) {
+export default function Registration({onRegisterClick}) {
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -34,10 +34,10 @@ export default function Registration({ onRegisterClick }) {
   function handleSubmit(event) {
     event.preventDefault();
     // registerUser(user.email, user.password);
-    onRegisterClick(user.email, user.password);
-    user.email = "";
-    user.password = "";
-    user.password_confirmation = "";
+    onRegisterClick(user.email, user.password)
+    user.email=""
+    user.password=""
+    user.password_confirmation=""
   }
 
   return (
@@ -58,7 +58,7 @@ export default function Registration({ onRegisterClick }) {
           value={user.email}
           onChange={handleChange}
           fullWidth
-          name="email"
+          name= "email"
         ></TextField>
         <TextField
           label="Password"
@@ -73,7 +73,7 @@ export default function Registration({ onRegisterClick }) {
           onChange={handleChange}
           type="password"
           fullWidth
-          name="password"
+          name= "password"
         ></TextField>
         <TextField
           label="Confirm Password"
@@ -88,7 +88,7 @@ export default function Registration({ onRegisterClick }) {
           onChange={handleChange}
           type="password"
           fullWidth
-          name="password_confirmation"
+          name= "password_confirmation"
         ></TextField>
         <Button
           type="submit"
