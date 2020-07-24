@@ -9,7 +9,6 @@ const { createProduct } = require("./products");
 
 const {
   registerUser,
-  registerAdmin,
   logInUser,
   getUserById,
   getUserCart,
@@ -17,8 +16,6 @@ const {
 
   // other db methods
 } = require("./users");
-
-const bcrypt = require("bcrypt");
 
 async function buildTables() {
   try {
@@ -37,7 +34,6 @@ async function buildTables() {
     products;
     CREATE TABLE users(
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255),
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     admin BOOLEAN
@@ -113,16 +109,6 @@ async function populateInitialData() {
     } else {
       console.log("Email is already in use");
     }
-    await new Promise((resolve, reject) => {
-      bcrypt.hash("12345678", 10, async function (err, hashedPassword) {
-        await registerAdmin({
-          name: "Andres",
-          email: "andres@me.com",
-          password: hashedPassword,
-        });
-        resolve();
-      });
-    });
     // const response = await getUserOrders({ id: 182 });
     await createProduct({
       name: "Australia",
